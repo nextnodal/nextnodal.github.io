@@ -1,0 +1,1079 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="星期天">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="定义bean我们先直接通过一张图来理解注解在Spring开发中如和定义bean：  那么我们既然加了注解，相当于定义了bean可是Spring的配置文件怎么知道他的存在，于是我们引入component-scan进行包扫描即 为了让Spring框架能够扫描到写在类上的注解，我们必需要在配置文件上进行包扫描  1&lt;context:component-scan base-package&#x3D;&amp;quot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring注解开发">
+<meta property="og:url" content="http://example.com/2026/09/05/51_Spring%E6%B3%A8%E8%A7%A3%E5%BC%80%E5%8F%91/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="定义bean我们先直接通过一张图来理解注解在Spring开发中如和定义bean：  那么我们既然加了注解，相当于定义了bean可是Spring的配置文件怎么知道他的存在，于是我们引入component-scan进行包扫描即 为了让Spring框架能够扫描到写在类上的注解，我们必需要在配置文件上进行包扫描  1&lt;context:component-scan base-package&#x3D;&amp;quot">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/assets/51_1.png">
+<meta property="og:image" content="http://example.com/assets/51_2.png">
+<meta property="og:image" content="http://example.com/assets/51_3.png">
+<meta property="og:image" content="http://example.com/assets/51_4.png">
+<meta property="og:image" content="http://example.com/assets/51_5.png">
+<meta property="og:image" content="http://example.com/assets/51_6.png">
+<meta property="article:published_time" content="2026-09-05T11:45:36.108Z">
+<meta property="article:modified_time" content="2026-09-06T03:40:04.214Z">
+<meta property="article:author" content="星期天">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/assets/51_1.png">
+  
+  
+  
+  <title>Spring注解开发 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Spring注解开发"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        星期天
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-09-05 19:45" pubdate>
+          2026年9月5日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          50 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Spring注解开发</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="定义bean"><a href="#定义bean" class="headerlink" title="定义bean"></a>定义bean</h3><p>我们先直接通过一张图来理解注解在Spring开发中如和定义bean：<br> <img src="/./assets/51_1.png" srcset="/img/loading.gif" lazyload alt="注解"></p>
+<p>那么我们既然加了注解，相当于定义了bean可是Spring的配置文件怎么知道他的存在，于是我们引入component-scan进行包扫描即 <mark>为了让Spring框架能够扫描到写在类上的注解，我们必需要在配置文件上进行包扫描</mark> </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">context:component-scan</span> <span class="hljs-attr">base-package</span>=<span class="hljs-string">&quot;。。。&quot;</span>/</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>component-scan</p>
+<ul>
+<li><p>component:组件,Spring将管理的bean视作自己的一个组件</p>
+</li>
+<li><p>scan:扫描</p>
+</li>
+</ul>
+</blockquote>
+<p>base-package指定Spring框架扫描的包路径，它会扫描指定包及其子包中的所有类上的注解。</p>
+<ul>
+<li><p>包路径越多[如:com.taro.dao.impl]，扫描的范围越小速度越快</p>
+</li>
+<li><p>包路径越少[如:com.taro],扫描的范围越大速度越慢</p>
+</li>
+<li><p>一般扫描到项目的组织名称即Maven的groupId下[如:com.taro]即可。</p>
+</li>
+</ul>
+<p><code>@Component注解如果不起名称，会有一个默认值就是当前类名首字母小写，所以也可以按照名称获取</code> </p>
+<p>对于@Component注解， <mark>还衍生出了其他三个注<br>@Controller : 表现层、@Service ：业务层、@Repository ：数据层</mark> 来定义bean。</p>
+<h3 id="纯注解开发"><a href="#纯注解开发" class="headerlink" title="纯注解开发"></a>纯注解开发</h3><p>顾名思义架空配置文件（建一个配置类），把权力掌握在我们自己手里，一张图理解一下</p>
+<p> <img src="/./assets/51_2.png" srcset="/img/loading.gif" lazyload alt="配置注解"></p>
+<blockquote>
+<p>-@Configuration注解用于设定当前类为配置类<br>-@ComponentScan注解用于设定扫描路径，此注解只能添加一次，多个数据请用数组格式(用花括号把路径加起来)</p>
+</blockquote>
+<p>可是问题来了主程序怎么知道配置在哪捏？</p>
+<ul>
+<li>只需要重新建一个启动类加载配置类就好啦</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">ApplicationContext</span> <span class="hljs-variable">ctx</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">AnnotationConfigApplicationContext</span>(SpringConfig.class);<br></code></pre></td></tr></table></figure>
+
+<p>我们注意一下下面这些小点哦</p>
+<blockquote>
+<ul>
+<li><p>记住@Component、@Controller、@Service、@Repository这四个注解</p>
+</li>
+<li><p>applicationContext.xml中&lt; context:component-san &#x2F;&gt;的作用是指定扫描包路径，注解为@ComponentScan</p>
+</li>
+<li><p>@Configuration标识该类为配置类，使用类替换applicationContext.xml文件</p>
+</li>
+<li><p>ClassPathXmlApplicationContext是加载XML配置文件</p>
+</li>
+<li><p>AnnotationConfigApplicationContext是加载配置类</p>
+</li>
+</ul>
+</blockquote>
+<hr>
+<h3 id="注解开发时bean的生命周期控制"><a href="#注解开发时bean的生命周期控制" class="headerlink" title="注解开发时bean的生命周期控制"></a>注解开发时bean的生命周期控制</h3><p>众所周知我们的Spring在创建bean时默认都是单例的，这个我们在之前的文章也进行过演示，当我们需要在注解开发时， <mark>使bean的创建变成非单例，只需要在其类上添加@Scope(“prototype”)注解</mark> </p>
+<p>当然我们之前也在配置文件中提到过init-method等属性来定义初始化方法与销毁方法，那么我们现在通过注解开发，没有了配置文件该怎么解决？</p>
+<ul>
+<li><p>@PostConstruct &#x2F;&#x2F;在构造方法之后执行，替换 init-method</p>
+</li>
+<li><p>@PreDestroy &#x2F;&#x2F;在销毁方法之前执行（容器关闭时执行）,替换 destroy-method</p>
+</li>
+</ul>
+<p><code>@PostConstruct和@PreDestroy注解如果找不到，需要导入javax.annotation-api这个jar包，因为jdk9版本开始删掉了这个包</code> </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>javax.annotation<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span> <br>	<span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>javax.annotation-api<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span> <br>	<span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.3.2<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span> <br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>我们小小通过一张图总结下bean的注解：<br> <img src="/./assets/51_3.png" srcset="/img/loading.gif" lazyload alt="注解示意图"></p>
+<hr>
+<h3 id="依赖注入"><a href="#依赖注入" class="headerlink" title="依赖注入"></a>依赖注入</h3><p><code>Spring为了使用注解简化开发，并没有提供构造函数注入、setter注入对应的注解，只提供了自动装配的注解实现。</code> </p>
+<h4 id="自动装配"><a href="#自动装配" class="headerlink" title="自动装配"></a>自动装配</h4><p><mark>@Autowired(他是按类型装配的)；如果类型相同使用@Qualifirt(“名称”)，来制定名称注入</mark> </p>
+<blockquote>
+<ul>
+<li>@Autowired可以写在属性上，也可也写在setter方法上，最简单的处理方式是写在属性上并将 setter方法删除掉,因为自动装配基于反射设计创建对象并通过暴力反射为私有属性进行设值； <mark>普通反射只能获取public修饰的内容，暴力反射除了获取public修饰的内容还可以获取private修改的内容</mark> 所以此处无需提供setter方法</li>
+</ul>
+</blockquote>
+<ul>
+<li><p>@Autowired默认按照类型自动装配，如果IOC容器中同类的Bean找到多个，就按照变量名和Bean的名称匹配。因为变量名叫bookDao而容器中也有一个booDao，所以可以成功注入。<br>🍊个🌰：<br> <img src="/./assets/51_4.png" srcset="/img/loading.gif" lazyload alt="按名称找不到"></p>
+<p>这样呢就会报错，因为按照类型会找到多个bean对象，此时会按照bookDao名称去找，因为IOC容器只有名称叫bookDao1和bookDao2 ,所以找不到，会报NoUniqueBeanDefinitionException</p>
+</li>
+</ul>
+<h4 id="指定名称注入"><a href="#指定名称注入" class="headerlink" title="指定名称注入"></a>指定名称注入</h4><p>@Qualifier<br>明明就这一个为啥还要单独放一个标题捏？<br>@Qualifier注解后的值就是需要注入的bean的名称。</p>
+<blockquote>
+<ul>
+<li><mark>注意:@Qualifier不能独立使用，必须和@Autowired一起使用</mark></li>
+</ul>
+</blockquote>
+<p>🍊个🌰：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">BookServiceImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">BookService</span> &#123;<br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-meta">@Qualifier(&quot;bookDao1&quot;)</span><br>    <span class="hljs-keyword">private</span> BookDao bookDao;<br>    <br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">save</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;book service save ...&quot;</span>);<br>        bookDao.save();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>当然我们现在提到的都是应用类型的注入那么。。。。</p>
+<h4 id="简单类型的注入"><a href="#简单类型的注入" class="headerlink" title="简单类型的注入"></a>简单类型的注入</h4><p>@Value(“…”)</p>
+<p>🍊个🌰:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Repository(&quot;bookDao&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">BookDaoImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">BookDao</span> &#123;<br>    <span class="hljs-meta">@Value(&quot;taro&quot;)</span><br>    <span class="hljs-keyword">private</span> String name;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">save</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;book dao save ...&quot;</span> + name);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>很明显明明加在name直接给name赋值更方便，那为什么还要专门注入捏？有没有一种可能，这个值还可以来自配置文件。</p>
+<h4 id="注解读取properties配置文件"><a href="#注解读取properties配置文件" class="headerlink" title="注解读取properties配置文件"></a>注解读取properties配置文件</h4><p><code>主要也就是针对@Value</code><br>1、准备配置文件<br>2、在配置类使用注解加载properties配置文件（@PropertySource）<br>3、使用@Value读取配置文件中的内容</p>
+<p>🍊个🌰：<br>1、准备配置文件</p>
+<p>我们准备一个名为jdbc.properties的配置文件并添加“name&#x3D;taro”</p>
+<p>2、使用注解加载properties配置文件（@PropertySource）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@ComponentScan(&quot;com.itheima&quot;)</span><br><span class="hljs-comment">//@PropertySource加载properties配置文件</span><br><span class="hljs-meta">@PropertySource(&#123;&quot;jdbc.properties&quot;&#125;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SpringConfig</span> &#123;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>3、使用@Value读取配置文件中的内容</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Repository(&quot;bookDao&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">BookDaoImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">BookDao</span> &#123;<br>    <span class="hljs-comment">//@Value：注入简单类型（无需提供set方法）</span><br>    <span class="hljs-meta">@Value(&quot;$&#123;name&#125;&quot;)</span><br>    <span class="hljs-keyword">private</span> String name;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">save</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;book dao save ...&quot;</span> + name);<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p> <img src="/./assets/51_5.png" srcset="/img/loading.gif" lazyload alt="运行结果"></p>
+<ul>
+<li><p>如果读取的properties配置文件有多个，可以使用@PropertySource的属性来指定多个<br>🍊个🌰：<br><code>@PropertySource(&#123;&quot;jdbc.properties&quot;,&quot;xxx.properties&quot;&#125;)</code></p>
+</li>
+<li><p>@PropertySource注解属性中可以把classpath:加上,代表从当前项目的根路径找文件</p>
+</li>
+<li><p>🍊个🌰：<br><code>@PropertySource(&#123;&quot;classpath:jdbc.properties&quot;&#125;)</code></p>
+</li>
+</ul>
+<p>稍微总结一下注入的注解吧：</p>
+<p>@Autowired</p>
+<table>
+<thead>
+<tr>
+<th align="center">名称</th>
+<th align="center">@Autowired</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">类型</td>
+<td align="center">属性注解  或  方法注解（了解）  或  方法形参注解（了解）</td>
+</tr>
+<tr>
+<td align="center">位置</td>
+<td align="center">属性定义上方  或  标准set方法上方  或  类set方法上方  或  方法形参前面</td>
+</tr>
+<tr>
+<td align="center">作用</td>
+<td align="center">为引用类型属性设置值</td>
+</tr>
+<tr>
+<td align="center">属性</td>
+<td align="center">required：true&#x2F;false，定义该属性是否允许为null</td>
+</tr>
+</tbody></table>
+<p>@Qualifier</p>
+<table>
+<thead>
+<tr>
+<th align="center">名称</th>
+<th align="center">@Qualifier</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">类型</td>
+<td align="center">属性注解  或  方法注解（了解）</td>
+</tr>
+<tr>
+<td align="center">位置</td>
+<td align="center">属性定义上方  或  标准set方法上方  或  类set方法上方</td>
+</tr>
+<tr>
+<td align="center">作用</td>
+<td align="center">为引用类型属性指定注入的beanId</td>
+</tr>
+<tr>
+<td align="center">属性</td>
+<td align="center">value（默认）：设置注入的beanId</td>
+</tr>
+</tbody></table>
+<p>@Value</p>
+<table>
+<thead>
+<tr>
+<th align="center">名称</th>
+<th align="center">@Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">类型</td>
+<td align="center">属性注解  或  方法注解（了解）</td>
+</tr>
+<tr>
+<td align="center">位置</td>
+<td align="center">属性定义上方  或  标准set方法上方  或  类set方法上方</td>
+</tr>
+<tr>
+<td align="center">作用</td>
+<td align="center">为  基本数据类型  或  字符串类型  属性设置值</td>
+</tr>
+<tr>
+<td align="center">属性</td>
+<td align="center">value（默认）：要注入的属性值</td>
+</tr>
+</tbody></table>
+<p>@PropertySource</p>
+<table>
+<thead>
+<tr>
+<th align="center">名称</th>
+<th align="center">@PropertySource</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">类型</td>
+<td align="center">类注解</td>
+</tr>
+<tr>
+<td align="center">位置</td>
+<td align="center">类定义上方</td>
+</tr>
+<tr>
+<td align="center">作用</td>
+<td align="center">加载properties文件中的属性值</td>
+</tr>
+<tr>
+<td align="center">属性</td>
+<td align="center">value（默认）：设置加载的properties文件对应的文件名或文件名组成的数组</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="注解开发管理第三方bean"><a href="#注解开发管理第三方bean" class="headerlink" title="注解开发管理第三方bean"></a>注解开发管理第三方bean</h3><p>@Bean</p>
+<table>
+<thead>
+<tr>
+<th align="center">名称</th>
+<th align="center">@Bean</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">类型</td>
+<td align="center">方法注解</td>
+</tr>
+<tr>
+<td align="center">位置</td>
+<td align="center">方法定义上方</td>
+</tr>
+<tr>
+<td align="center">作用</td>
+<td align="center">设置该方法的返回值作为spring管理的bean</td>
+</tr>
+<tr>
+<td align="center">属性</td>
+<td align="center">value（默认）：定义bean的id</td>
+</tr>
+</tbody></table>
+<p>@Import</p>
+<table>
+<thead>
+<tr>
+<th align="center">名称</th>
+<th align="center">@Import</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">类型</td>
+<td align="center">类注解</td>
+</tr>
+<tr>
+<td align="center">位置</td>
+<td align="center">类定义上方</td>
+</tr>
+<tr>
+<td align="center">作用</td>
+<td align="center">导入配置类</td>
+</tr>
+<tr>
+<td align="center">属性</td>
+<td align="center">value（默认）：定义导入的配置类类名，<br/>当配置类有多个时使用数组格式一次性导入多个配置类</td>
+</tr>
+</tbody></table>
+<p>嗯。。。其实就这俩<br><mark>值得注意的是@Import  只能写一次，需要导入多个就跟在后面用数组格式</mark> </p>
+<h3 id="注解开发实现为第三方bean注入资源"><a href="#注解开发实现为第三方bean注入资源" class="headerlink" title="注解开发实现为第三方bean注入资源"></a>注解开发实现为第三方bean注入资源</h3><p>提个问题：在使用@Bean创建bean对象的时候，如果这个方法在创建的过程中需要其他资源捏？我们怎么把其他资源给他捏？<br>公布答案：注入咯，所以既然是注入，那么一样的，也就分两种简单类型和引用类型咯。</p>
+<h4 id="简单类型"><a href="#简单类型" class="headerlink" title="简单类型"></a>简单类型</h4><p>其实看一下这个🌰就明白了：<br><mark>使用 <code>@Value</code> 注解引入值</mark> </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">JdbcConfig</span> &#123;<br>    <span class="hljs-meta">@Value(&quot;com.mysql.jdbc.Driver&quot;)</span><br>    <span class="hljs-keyword">private</span> String driver;<br>    <span class="hljs-meta">@Value(&quot;jdbc:mysql://localhost:3306/spring_db&quot;)</span><br>    <span class="hljs-keyword">private</span> String url;<br>    <span class="hljs-meta">@Value(&quot;root&quot;)</span><br>    <span class="hljs-keyword">private</span> String userName;<br>    <span class="hljs-meta">@Value(&quot;password&quot;)</span><br>    <span class="hljs-keyword">private</span> String password;<br>	<span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> DataSource <span class="hljs-title function_">dataSource</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-type">DruidDataSource</span> <span class="hljs-variable">ds</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">DruidDataSource</span>();<br>        ds.setDriverClassName(driver);<br>        ds.setUrl(url);<br>        ds.setUsername(userName);<br>        ds.setPassword(password);<br>        <span class="hljs-keyword">return</span> ds;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="引用类型"><a href="#引用类型" class="headerlink" title="引用类型"></a>引用类型</h4><p>提出需求：假设在构建DataSource对象的时候，需要用到BookDao对象，该如何把BookDao对象注入进方法内让其使用呢?<br>如下图所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">JdbcConfig</span> &#123;<br>	<span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> DataSource <span class="hljs-title function_">dataSource</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-type">DruidDataSource</span> <span class="hljs-variable">ds</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">DruidDataSource</span>();<br>        ds.setDriverClassName(<span class="hljs-string">&quot;com.mysql.jdbc.Driver&quot;</span>);<br>        ds.setUrl(<span class="hljs-string">&quot;jdbc:mysql://localhost:3306/spring_db&quot;</span>);<br>        ds.setUsername(<span class="hljs-string">&quot;root&quot;</span>);<br>        ds.setPassword(<span class="hljs-string">&quot;root&quot;</span>);<br>        <span class="hljs-keyword">return</span> ds;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>解决方案：</p>
+<p>🍊个🌰：</p>
+<p>1、在SpringConfig中扫描BookDao；扫描的目的是让Spring能管理到BookDao,也就是说要让IOC容器中有一个bookDao对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@ComponentScan(&quot;com.taro.dao&quot;)</span><br><span class="hljs-meta">@Import(&#123;JdbcConfig.class&#125;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SpringConfig</span> &#123;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>2、在JdbcConfig类的方法上添加参数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Bean</span><br><span class="hljs-keyword">public</span> DataSource <span class="hljs-title function_">dataSource</span><span class="hljs-params">(BookDao bookDao)</span>&#123;<br>    System.out.println(bookDao);<br>    <span class="hljs-type">DruidDataSource</span> <span class="hljs-variable">ds</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">DruidDataSource</span>();<br>    ds.setDriverClassName(driver);<br>    ds.setUrl(url);<br>    ds.setUsername(userName);<br>    ds.setPassword(password);<br>    <span class="hljs-keyword">return</span> ds;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><mark>引用类型注入只需要为bean定义方法设置形参即可，容器会根据类型自动装配对象。</mark> </p>
+<hr>
+<p>最后对Spring注解开发做个总结吧：<br> <img src="/./assets/51_6.png" srcset="/img/loading.gif" lazyload alt="注解总结"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Spring注解开发</div>
+      <div>http://example.com/2026/09/05/51_Spring注解开发/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>星期天</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年9月5日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2026/09/05/52_Spring%E6%95%B4%E5%90%88MyBatis%E4%B8%8EJUnit/" title="Spring整合MyBatis与JUnit">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Spring整合MyBatis与JUnit</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/09/05/50_DI%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5/" title="DI依赖注入">
+                        <span class="hidden-mobile">DI依赖注入</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    function isExpandAllEnabled() {
+      return CONFIG.toc && CONFIG.toc.expand_all === true;
+    }
+    function expandAllToc() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .tocbot-is-collapsed').removeClass('tocbot-is-collapsed');
+    }
+    function updateTocToggle($li, $childList) {
+      var $toggle = $li.children('.toc-toggle');
+      if ($toggle.length === 0) { return; }
+      var collapsed = $childList.hasClass('tocbot-is-collapsed');
+      $toggle
+        .toggleClass('toc-toggle-collapsed', collapsed)
+        .toggleClass('toc-toggle-expanded', !collapsed);
+    }
+    function bindTocToggle() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .toc-list-item').each(function() {
+        var $li = jQuery(this);
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) {
+          if ($li.children('.toc-toggle').length === 0) {
+            $li.prepend('<span class="toc-toggle toc-toggle-placeholder" aria-hidden="true">›</span>');
+          }
+          return;
+        }
+
+        if ($li.children('.toc-toggle').length === 0) {
+          $li.prepend('<span class="toc-toggle toc-toggle-expanded" aria-hidden="true">›</span>');
+        }
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('click.tocToggle').on('click.tocToggle', '.toc-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $li = jQuery(this).parent('.toc-list-item');
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) { return; }
+        $childList.toggleClass('tocbot-is-collapsed');
+        updateTocToggle($li, $childList);
+      });
+      if (!window.__tocToggleObserver) {
+        window.__tocToggleObserver = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type !== 'attributes' || mutation.attributeName !== 'class') { return; }
+            var $list = jQuery(mutation.target);
+            var $li = $list.parent('.toc-list-item');
+            if ($li.length === 0) { return; }
+            updateTocToggle($li, $list);
+          });
+        });
+        jQuery('#toc-body ol').each(function() {
+          window.__tocToggleObserver.observe(this, { attributes: true });
+        });
+      }
+    }
+    var tocConfig = Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc);
+    if (isExpandAllEnabled()) {
+      tocConfig.collapseDepth = 6;
+    }
+    window.tocbot.init(tocConfig);
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+    expandAllToc();
+    bindTocToggle();
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+        expandAllToc();
+        bindTocToggle();
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,972 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="星期天">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="红黑树通过上一问我们已经清楚的了解了AVL树及其相关操作，并对这些特殊的BST有了一些认识，接下来我们将见识这个世界的神奇——红黑树   AVL树及其相关操作地址   还记得下面这颗我们几乎做不到的完美平衡树吧：   这样的二叉树我们都知道是很难也没必要的，所以人类的执着让我们发现AVL这种自平衡的二叉树，随着人类的进化，人们发现AVL树虽然是一棵绝对平衡的二叉搜索树，其要求每个节点的左右子树高度">
+<meta property="og:type" content="article">
+<meta property="og:title" content="红黑树及其相关操作（一遍包会）">
+<meta property="og:url" content="http://example.com/2026/09/05/16_%E7%BA%A2%E9%BB%91%E6%A0%91%E5%8F%8A%E5%85%B6%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%EF%BC%88%E4%B8%80%E9%81%8D%E5%8C%85%E4%BC%9A%EF%BC%89/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="红黑树通过上一问我们已经清楚的了解了AVL树及其相关操作，并对这些特殊的BST有了一些认识，接下来我们将见识这个世界的神奇——红黑树   AVL树及其相关操作地址   还记得下面这颗我们几乎做不到的完美平衡树吧：   这样的二叉树我们都知道是很难也没必要的，所以人类的执着让我们发现AVL这种自平衡的二叉树，随着人类的进化，人们发现AVL树虽然是一棵绝对平衡的二叉搜索树，其要求每个节点的左右子树高度">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/assets/16_1.png">
+<meta property="og:image" content="http://example.com/assets/16_2.png">
+<meta property="og:image" content="http://example.com/assets/16_3.png">
+<meta property="og:image" content="http://example.com/assets/16_4.gif">
+<meta property="og:image" content="http://example.com/assets/16_5.png">
+<meta property="og:image" content="http://example.com/assets/16_6.png">
+<meta property="og:image" content="http://example.com/assets/16_7.png">
+<meta property="og:image" content="http://example.com/assets/16_8.png">
+<meta property="og:image" content="http://example.com/assets/16_9.png">
+<meta property="og:image" content="http://example.com/assets/16_6.png">
+<meta property="og:image" content="http://example.com/assets/16_7.png">
+<meta property="og:image" content="http://example.com/assets/16_10.png">
+<meta property="og:image" content="http://example.com/assets/16_11.png">
+<meta property="og:image" content="http://example.com/assets/16_12.png">
+<meta property="og:image" content="http://example.com/assets/16_13.png">
+<meta property="og:image" content="http://example.com/assets/16_14.png">
+<meta property="og:image" content="http://example.com/assets/16_15.png">
+<meta property="og:image" content="http://example.com/assets/16_16.png">
+<meta property="og:image" content="http://example.com/assets/16_16.png">
+<meta property="article:published_time" content="2026-09-05T11:45:34.226Z">
+<meta property="article:modified_time" content="2026-09-06T03:18:52.258Z">
+<meta property="article:author" content="星期天">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/assets/16_1.png">
+  
+  
+  
+  <title>红黑树及其相关操作（一遍包会） - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="红黑树及其相关操作（一遍包会）"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        星期天
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-09-05 19:45" pubdate>
+          2026年9月5日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          13k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          110 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">红黑树及其相关操作（一遍包会）</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="红黑树"><a href="#红黑树" class="headerlink" title="红黑树"></a>红黑树</h2><p><code>通过上一问我们已经清楚的了解了AVL树及其相关操作，并对这些特殊的BST有了一些认识，接下来我们将见识这个世界的神奇——红黑树</code> </p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45696320/article/details/126076107">AVL树及其相关操作地址</a><br> <img src="/./assets/16_1.png" srcset="/img/loading.gif" lazyload alt="AVL树"></p>
+</blockquote>
+<p>还记得下面这颗我们几乎做不到的完美平衡树吧：</p>
+<p> <img src="/./assets/16_2.png" srcset="/img/loading.gif" lazyload alt="完美BST"></p>
+<p>这样的二叉树我们都知道是很难也没必要的，所以人类的执着让我们发现AVL这种自平衡的二叉树，随着人类的进化，人们发现AVL树虽然是一棵绝对平衡的二叉搜索树，其要求每个节点的左右子树高度差的绝对值都不超过1，这样可以保证查询时高效率的时间复杂度，即Olog(N);但是如果要对AVL树做一些结构修改的操作,性能非常低下，比如：插入时要维护其绝对平衡,旋转的次数比较多，更差的是在删除时，有可能一直要让旋转持续到根的位置。所以他很难胜任修改操作多的情况，于是乎第二种自平衡二叉树（红黑树）。。。。嗯，客套话就不乱吹来直接来认识一下吧：</p>
+<blockquote>
+<p>红黑树性质（当然他满足BST的性质，因为本质是一颗特殊的BST）</p>
+<ol>
+<li><p>每个节点都有颜色、红色或黑色</p>
+</li>
+<li><p>根节点是黑色</p>
+</li>
+<li><p>每个叶子节点（NIL）都是黑色<br><code>nil 节点就是空节点，在红黑树的实现中，nil 节点代替二叉树中的 NULL：叶子节点的左节点和右节点指针都指向 nil 节点；只一个子树的节点，其另外一个子节点指针也指向 nil 节点；根节点的父节点也指向 nil 节点。nil节点的父节点和右节点都是自己，左节点为红黑树的根节点。如果红黑树为空（没有根节点），那么nil节点的左节点就也是自己。nil节点的存在大大方便了很多操作。</code><br>  <img src="/./assets/16_3.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>如果一个节点是红的、那么他的子节点必须是黑的</p>
+</li>
+<li><p>任意一个节点到该节点每个叶子节点的所有路径上包含相同的黑节点个树（所以他保证最长的路径最多的最短路径的两倍）</p>
+</li>
+</ol>
+</blockquote>
+<p> <img src="/./assets/16_4.gif" srcset="/img/loading.gif" lazyload alt="红黑树1"></p>
+<p> <img src="/./assets/16_5.png" srcset="/img/loading.gif" lazyload alt="红黑树2"></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">到这里应该已经认识红黑树了，那么我们来看看他具体是如何操作的<br></code></pre></td></tr></table></figure>
+
+<hr>
+<p><mark>首先认识两个旋转操作，与AVL树基本一致可以有兴趣可以看看 <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45696320/article/details/126076107?spm=1001.2014.3001.5501">AVL树</a> </mark> </p>
+<blockquote>
+<p>左旋操作</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">turnLeft</span><span class="hljs-params">(RBNode avl)</span> &#123;<br>        <span class="hljs-type">RBNode</span> <span class="hljs-variable">cur</span> <span class="hljs-operator">=</span> avl.right;<br>        avl.right = cur.left;<br>        <span class="hljs-keyword">if</span> (cur.left != <span class="hljs-literal">null</span>)&#123;<br>            cur.left.parent = avl;<br>        &#125;<br>        cur.parent = avl.parent;<br>        <span class="hljs-comment">//当然有可能原本的父节点是根没有爷爷节点，所以交换后，此时的节点即（avl.right）变成头节点</span><br>        <span class="hljs-keyword">if</span> (avl.parent == <span class="hljs-literal">null</span>)&#123;<br>            root = cur;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (avl.parent.left == avl)&#123;<br>            avl.parent.left = cur;<br>        &#125;<span class="hljs-keyword">else</span> &#123;<br>            avl.parent.right = cur;<br>        &#125;<br>        cur.left = avl;<br>        avl.parent = cur;<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<p> <img src="/./assets/16_6.png" srcset="/img/loading.gif" lazyload alt="左旋示意图"></p>
+<blockquote>
+<p>右旋操作</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">turnRight</span><span class="hljs-params">(RBNode avl)</span> &#123;<br>        <span class="hljs-type">RBNode</span> <span class="hljs-variable">cur</span> <span class="hljs-operator">=</span> avl.left;<br>        avl.left = cur.right;<br>        <span class="hljs-keyword">if</span> (cur.right != <span class="hljs-literal">null</span>)&#123;<br>            cur.right.parent = avl;<br>        &#125;<br>        cur.parent = avl.parent;<br>        <span class="hljs-keyword">if</span> (avl.parent == <span class="hljs-literal">null</span>)&#123;<br>            root = cur;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (avl.parent.left == avl)&#123;<br>            avl.parent.left = cur;<br>        &#125;<span class="hljs-keyword">else</span> &#123;<br>            avl.parent.right = cur;<br>        &#125;<br>        cur.right = avl;<br>        avl.parent = cur;<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<p> <img src="/./assets/16_7.png" srcset="/img/loading.gif" lazyload alt="右旋示意图"></p>
+<p><code>发现了吧和AVL树的旋转操作不说略有所同只说一模一样，到现在也能理解为什么AVL树中LL状态操作要叫右单旋了吧，他是基于参考节点root的位置变化</code><br>这个不应该有问题哦是AVL树的操作，不明白的话可以反回去看一下 <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45696320/article/details/126076107?spm=1001.2014.3001.5501">AVL树</a> </p>
+<hr>
+<p>接下来我们真是介绍红黑树的插入操作</p>
+<blockquote>
+<p>首先我们要理解红黑树与AVL树一样都是特殊的BST所以他的大概操作基本是与BST一致的只是多了一些维持操作</p>
+<ol>
+<li>插入节点（与BST一致）并加入颜色让他为红，这样可以避免黑色数量不同方便操作<br>2.进行红黑树维持insertFixUp()操作</li>
+</ol>
+</blockquote>
+<p><code>而我们的重点就是维持这棵树时的歌从情况对应的操作</code> </p>
+<blockquote>
+<ol>
+<li><p>插入时树是空的，那我也直接插入，把根放成他就好了</p>
+</li>
+<li><p>插入节点的父亲是黑的（特殊说明：我没有种族歧视哟，不要告我），啥也不用做，因为插入的是红的；<br> <img src="/./assets/16_8.png" srcset="/img/loading.gif" lazyload alt="插入节点是黑"></p>
+</li>
+<li><p>插入时父亲节点是红的，这就相对比较麻烦了，我们又要分情况<br>首先这种情况要分为两个对称操作的部分，即父节点是爷爷节点的左孩子或者右孩子；如下图例我们以左孩子为例操作，后文将附全部代码<br><code>1.插入节点父节点的兄弟节点也就是插入节点的叔叔节点也是红的</code><br>我们让他的父节点与叔叔节点变黑、爷爷节点变红，并且把爷爷节点作为新的当前节点继续操作，因为如图，爷爷节点违反规则了（这波叫孙债爷偿）<br> <img src="/./assets/16_9.png" srcset="/img/loading.gif" lazyload alt="父红、叔红"></p>
+<p><code>2. 插入节点叔叔节点是黑的，并且当前节点是父节点右孩子</code><br>我们以父节点为支点左旋，如下图<br> <img src="/./assets/16_6.png" srcset="/img/loading.gif" lazyload alt="左旋示意图"></p>
+<p><mark>此时我们可以看到旋转后仍未返规则，不过此时的状态也就是我们要介绍的第三种情况</mark><br><code>3. 叔叔节点是黑，并且当前节点是父节点左子树</code><br>我们<br>1、先将父节点涂黑；<br>2、再将爷爷节点涂红<br>3、最后以当前节点爷爷节点为支点右旋<br> <img src="/./assets/16_7.png" srcset="/img/loading.gif" lazyload alt="右旋示意图"></p>
+</li>
+<li><p>所有操作完成后根节点涂黑</p>
+</li>
+</ol>
+</blockquote>
+<p><code>这是维持操作代码可以稍作理解后续将附完整代码</code> </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">insertFixUp</span><span class="hljs-params">(RBNode avl)</span> &#123;<br>        <span class="hljs-comment">//千万不要这么写哦，如果吧父亲和爷爷节点定义在前面，那怎么循环呢？</span><br>        <span class="hljs-comment">// RBNode parent  = avl.parent, grandParent = parent.parent;</span><br>        RBNode parent , grandParent;<br>        <span class="hljs-keyword">while</span> ((parent = avl.parent) != <span class="hljs-literal">null</span> &amp;&amp; parent.color == red)&#123;<br>            grandParent = parent.parent;<br>            <span class="hljs-keyword">if</span> (parent == grandParent.left)&#123;<br>                <span class="hljs-type">RBNode</span> <span class="hljs-variable">uncle</span> <span class="hljs-operator">=</span> grandParent.right;<br>                <span class="hljs-keyword">if</span> (uncle != <span class="hljs-literal">null</span> &amp;&amp; uncle.color == red)&#123;<br>                    parent.color = black;<br>                    uncle.color = black;<br>                    grandParent.color = red;<br>                    avl = grandParent;<br>                    <span class="hljs-keyword">continue</span>;<span class="hljs-comment">//记得要冲这里跳出到下一个执行哦</span><br>                &#125;<br>                <span class="hljs-keyword">if</span> (avl == parent.right)&#123;<br>                    <span class="hljs-comment">//跟AVL左旋操作如出一辙</span><br>                    turnLeft(parent);<br>                    <span class="hljs-type">RBNode</span> <span class="hljs-variable">cur</span> <span class="hljs-operator">=</span> parent;<br>                    parent = avl;<br>                    avl = cur;<br>                &#125;<br>                parent.color = black;<br>                grandParent.color = red;<br>                turnRight(grandParent);<br>            &#125;<span class="hljs-keyword">else</span> &#123;<br>                <span class="hljs-comment">//父节点是当前爷爷节点的右子树</span><br>                <span class="hljs-type">RBNode</span> <span class="hljs-variable">uncle</span> <span class="hljs-operator">=</span> grandParent.left;<br>                <span class="hljs-keyword">if</span> (uncle != <span class="hljs-literal">null</span> &amp;&amp; uncle.color == red)&#123;<br>                    parent.color = black;<br>                    uncle.color = black;<br>                    grandParent.color = red;<br>                    avl = grandParent;<br>                    <span class="hljs-keyword">continue</span>;<br>                &#125;<br>                <span class="hljs-keyword">if</span> (avl == parent.left)&#123;<br>                    turnRight(parent);<br>                    <span class="hljs-type">RBNode</span> <span class="hljs-variable">cur</span> <span class="hljs-operator">=</span> parent;<br>                    parent = avl;<br>                    avl = cur;<br>                &#125;<br>                parent.color = black;<br>                grandParent.color = red;<br>                turnLeft(grandParent);<br>            &#125;<br>        &#125;<br>        <span class="hljs-comment">//不管怎么样，操作完之后跟节点有可能不黑，我们给他涂黑就好了</span><br>        root.color = black;<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<p>想必此时我们已经基本理解了红黑树的插入操作，那么接下来我们看看他完整的样子：</p>
+<blockquote>
+<p>注：此代码我还没有测试，不过我感觉有bug，因为节点有可能是空，但是我的所有颜色及父节点操作都是直接修改可能会异常，并且很多地方没考虑引用问题，所以此代码仅供学习参考，后续找到工作，闲了将进行测试并附上完整代码</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><code class="hljs java"><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">insert</span><span class="hljs-params">(<span class="hljs-type">int</span> val)</span>&#123;<br>    <span class="hljs-type">RBNode</span> <span class="hljs-variable">rbVal</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RBNode</span>(val , black);<br>    root = insert(root , rbVal);<br>&#125;<br><br><span class="hljs-keyword">private</span> RBNode <span class="hljs-title function_">insert</span><span class="hljs-params">(RBNode root, RBNode avl)</span> &#123;<br>    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">null</span>)&#123;<br>        root = avl;<br>    &#125;<span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">if</span> (root.val &gt; avl.val)&#123;<br>            root.left = insert(root.left , avl);<br>            avl.color = red;<br>            avl.parent = root;<br>            insertFixUp(avl);<br>        &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (root.val &lt; avl.val)&#123;<br>            root.right = insert(root.right , avl);<br>            avl.color = red;<br>            avl.parent = root;<br>            insertFixUp(avl);<br>        &#125;<span class="hljs-keyword">else</span> &#123;<br>            System.out.println(<span class="hljs-string">&quot;已经有这个值了不要重复添加&quot;</span>);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> root;<br>&#125;<br><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">insertFixUp</span><span class="hljs-params">(RBNode avl)</span> &#123;<br>    <span class="hljs-comment">//千万不要这么写哦，如果吧父亲和爷爷节点定义在前面，那怎么循环呢？</span><br>    <span class="hljs-comment">// RBNode parent  = avl.parent, grandParent = parent.parent;</span><br>    RBNode parent , grandParent;<br>    <span class="hljs-keyword">while</span> ((parent = avl.parent) != <span class="hljs-literal">null</span> &amp;&amp; parent.color == red)&#123;<br>        grandParent = parent.parent;<br>        <span class="hljs-keyword">if</span> (parent == grandParent.left)&#123;<br>            <span class="hljs-type">RBNode</span> <span class="hljs-variable">uncle</span> <span class="hljs-operator">=</span> grandParent.right;<br>            <span class="hljs-keyword">if</span> (uncle != <span class="hljs-literal">null</span> &amp;&amp; uncle.color == red)&#123;<br>                parent.color = black;<br>                uncle.color = black;<br>                grandParent.color = red;<br>                avl = grandParent;<br>                <span class="hljs-keyword">continue</span>;<span class="hljs-comment">//记得要冲这里跳出到下一个执行哦</span><br>            &#125;<br>            <span class="hljs-keyword">if</span> (avl == parent.right)&#123;<br>                <span class="hljs-comment">//跟AVL左旋操作如出一辙</span><br>                turnLeft(parent);<br>                <span class="hljs-type">RBNode</span> <span class="hljs-variable">cur</span> <span class="hljs-operator">=</span> parent;<br>                parent = avl;<br>                avl = cur;<br>            &#125;<br>            parent.color = black;<br>            grandParent.color = red;<br>            turnRight(grandParent);<br>        &#125;<span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-comment">//父节点是当前爷爷节点的右子树</span><br>            <span class="hljs-type">RBNode</span> <span class="hljs-variable">uncle</span> <span class="hljs-operator">=</span> grandParent.left;<br>            <span class="hljs-keyword">if</span> (uncle != <span class="hljs-literal">null</span> &amp;&amp; uncle.color == red)&#123;<br>                parent.color = black;<br>                uncle.color = black;<br>                grandParent.color = red;<br>                avl = grandParent;<br>                <span class="hljs-keyword">continue</span>;<br>            &#125;<br>            <span class="hljs-keyword">if</span> (avl == parent.left)&#123;<br>                turnRight(parent);<br>                <span class="hljs-type">RBNode</span> <span class="hljs-variable">cur</span> <span class="hljs-operator">=</span> parent;<br>                parent = avl;<br>                avl = cur;<br>            &#125;<br>            parent.color = black;<br>            grandParent.color = red;<br>            turnLeft(grandParent);<br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">//不管怎么样，操作完之后跟节点有可能不黑，我们给他涂黑就好了</span><br>    root.color = black;<br>&#125;<br><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">turnRight</span><span class="hljs-params">(RBNode avl)</span> &#123;<br>    <span class="hljs-type">RBNode</span> <span class="hljs-variable">cur</span> <span class="hljs-operator">=</span> avl.left;<br>    avl.left = cur.right;<br>    <span class="hljs-keyword">if</span> (cur.right != <span class="hljs-literal">null</span>)&#123;<br>        cur.right.parent = avl;<br>    &#125;<br>    cur.parent = avl.parent;<br>    <span class="hljs-keyword">if</span> (avl.parent == <span class="hljs-literal">null</span>)&#123;<br>        root = cur;<br>    &#125;<br>    <span class="hljs-keyword">if</span> (avl.parent.left == avl)&#123;<br>        avl.parent.left = cur;<br>    &#125;<span class="hljs-keyword">else</span> &#123;<br>        avl.parent.right = cur;<br>    &#125;<br>    cur.right = avl;<br>    avl.parent = cur;<br>&#125;<br><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">turnLeft</span><span class="hljs-params">(RBNode avl)</span> &#123;<br>    <span class="hljs-type">RBNode</span> <span class="hljs-variable">cur</span> <span class="hljs-operator">=</span> avl.right;<br>    avl.right = cur.left;<br>    <span class="hljs-keyword">if</span> (cur.left != <span class="hljs-literal">null</span>)&#123;<br>        cur.left.parent = avl;<br>    &#125;<br>    cur.parent = avl.parent;<br>    <span class="hljs-comment">//当然有可能原本的父节点是根没有爷爷节点，所以交换后，此时的节点即（avl.right）变成头节点</span><br>    <span class="hljs-keyword">if</span> (avl.parent == <span class="hljs-literal">null</span>)&#123;<br>        root = cur;<br>    &#125;<br>    <span class="hljs-keyword">if</span> (avl.parent.left == avl)&#123;<br>        avl.parent.left = cur;<br>    &#125;<span class="hljs-keyword">else</span> &#123;<br>        avl.parent.right = cur;<br>    &#125;<br>    cur.left = avl;<br>    avl.parent = cur;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>到这里完整的插入我们已经理解了我想你应该有如下几个问题（没有的话好兄弟，给你一张反思券，好好反思一下为啥没发现，文章最后有具体操作的完整代码可供参考）</p>
+<blockquote>
+<ol>
+<li><p><code>为啥插入节点要变成红的</code><br>解：红黑树性质第五条：任意一个节点到该节点每个叶子节点的所有路径上包含相同的黑节点个树，如果插的是黑的。。。。。</p>
+</li>
+<li><p><code>为啥不直接插入红，而是插入后置为红</code><br>解：主要是我们写的方法，如果树一开始是空我们插一个节点当树根的时候方便。<br>3 <code>为啥两个父节点和叔叔节点都是红的话要先把他两变黑，爷爷变红再进行旋转</code><br>解：如果父节点是红的话我们插入一个红的嘎违背了规则4.“ 如果一个节点是红的、那么他的子节点必须是黑的”所以我们把父亲涂黑，但是涂黑后我们又违背规则五，因为当前路径多了一个黑的，那么他爷爷到他爸爸这条路径就多了一个黑，所以我们把父亲再把父亲变红，然而做完这部我们会发现叔叔节点又少了一个黑，所以我们把叔叔变黑。</p>
+</li>
+<li><p><code>为啥上一步的爷爷节点要变红，咱们知道爷爷是黑的</code><br>解：这里没有基因学说，是因为我们的操作是基于父节点是红树操作，父亲是红爷爷只能是黑因为红节点子节点只能是黑，如果爷爷红了那么爹肯定黑了（反正就是你俩不是一个颜色，才能证明是亲生的，啊，真贱啊这棵树）<br><mark>到这里你也应该能看出来为啥要以爷爷节点继续操作了，因为我们的步骤保障了，儿子，爸爸，叔叔节点不违反规则，但是爷爷节点就不一定了所以继续以爷爷为新节点继续判断</mark> </p>
+<ol start="4">
+<li><code>爹是红的，叔叔是黑的，为啥要旋转</code><br>解：这里我们是分情况了子树是父亲右和左，而在右的左旋操作其实就是为了达到第三种状态，所以旋转这俩步其实可以算是一个步骤，而达到状态三也就是，子树是父的左树，此时与状态二一样，我们仍然再违背规则4，完了规则4是啥了？（如果一个节点是红的、那么他的子节点必须是黑的）所以我们再把爸爸涂黑爷爷涂红，是为了完成右旋后满足规则5，然后进行右旋</li>
+</ol>
+</li>
+</ol>
+<p><code>这里是不是放个图好一点，哈哈哈其实如果理清的话这个图你身边的纸上应该已经画出来了，所以。。。。</code><br>嗯。。。图如下可供参考<br> <img src="/./assets/16_10.png" srcset="/img/loading.gif" lazyload alt="旋转"></p>
+<p>右旋图：F涂黑此时多一个黑，再把G涂红，此时G-&gt;U这条路少一个黑，所以右旋让左边多出来的黑当左右的公共黑爸爸即把他置为根</p>
+</blockquote>
+<p>好了到这里红黑树的插入我们就告一段了，解下了，再放一个大招，红黑树的删除哈哈哈哈哈哈哈哈！后悔学计算机吧，文章写到这里我掉毛已经比我家猫严重了。</p>
+<hr>
+<p>红黑树删除：<br>首先来讲一段废话（理论知识及删除操作的大概思想、如果有基础的话也看看吧，不然。。。。）</p>
+<blockquote>
+<ol>
+<li><p>永远记住RBTree与ABLTree都是特殊的BST，他仍然满足BST特性删除操作也基于BST只是在删除后加入修正操作来维持RBTree（不是修正药业哟～）</p>
+</li>
+<li><p>为了方便我们把删除分为四种情况<br><code>1. 左右节点都是空</code><br>如果此时这个节点没爹，又因为没儿子所以，只有这棵树只有这一个节点，我们置空，如果有爹，则判断当前节点是父节点左还是右孩子然后置空，最后执行修正维持操作<br><code>2.只有左孩子 </code><br>如果当前节点没爹，就是树根，让儿子当树根就好，如果有爹，把左孩子与爹连起来；最后执行修正维持操作<br><code>3. 只有右孩子</code><br>同自由左孩子类似<br><code>4. 左右孩子都不是空</code><br>找到前驱或者后继节点进行替换，然后在相应的树中删除被替换的节点（这样就会把复杂的删除两个节点的过程变成删除前驱&#x2F;后继节点因为前驱或后继最多只有一个孩子哟～）这个操作与AVL树一样可以看一下 <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45696320/article/details/126076107">AVL树</a></p>
+</li>
+<li><p>想必家人们已经发现了，每一种情况完成后都要执行修正操作来维持RBtree这也是最难的部分，我们后续将介绍</p>
+</li>
+</ol>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//这是删除框架、后续会有完整代码</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">delete</span><span class="hljs-params">(RBNode avl)</span>&#123;<br>        <span class="hljs-keyword">if</span> (avl.left != <span class="hljs-literal">null</span> &amp;&amp; avl.right != <span class="hljs-literal">null</span>)&#123;<br>            deleteDoubleChild(avl);<br>        &#125;<br>        <span class="hljs-keyword">if</span> (avl.left == <span class="hljs-literal">null</span> &amp;&amp; avl.right == <span class="hljs-literal">null</span>)&#123;<br>            deleteNoChild(avl);<br>        &#125;<br>        <span class="hljs-keyword">if</span> (avl.left != <span class="hljs-literal">null</span>)&#123;<br>            deleteLeftChild(avl);<br>        &#125;<br>        <span class="hljs-keyword">if</span> (avl.right != <span class="hljs-literal">null</span>)&#123;<br>            deleteRightChild(avl);<br>        &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<p>上面那个是操作框架后文会附完整代码，我们接下来看看删除的修正操作，当然再了解这个之前，我们再来回顾一下RBT的五条性质规则：</p>
+<blockquote>
+<ol>
+<li><p>每个节点都有颜色、红色或黑色</p>
+</li>
+<li><p>根节点是黑色</p>
+</li>
+<li><p>每个叶子节点（NIL）都是黑色</p>
+</li>
+<li><p>如果一个节点是红的、那么他的子节点必须是黑的</p>
+</li>
+<li><p>任意一个节点到该节点每个叶子节点的所有路径上包含相同的黑节点个树</p>
+</li>
+</ol>
+</blockquote>
+<p><code>很明显了吧我们几乎删除节点有可能使2、4、5规则不成立所以。。。</code><br>接下来请看操作：<br>如果对红黑树有过了解我们可能听说过额外黑这种说法，其实就是已经删掉的那个节点我们默认是黑，如果现在的节点是红就是“红+黑”，如果现在的是黑就是“黑+黑”，后面会解释问什么这样，（避免规则2）我们后面会总结这个东西，现在先带大家认识一下各种情况，我们目前记住删掉的节点我们默认是黑，新加的节点我们把这种黑给他保留在新加节点中（当然他是不存在的只是一种想象）<br><mark>这时大概会有两大种情况，即当前节点也就是删掉的节点是原树的左或右孩子，因为两种情况与插入时一样是对称操作，所以我们以左孩子为例又可以分别三种情况：</mark> </p>
+<blockquote>
+<p><code>情况1:删除节点的继承节点是红，那么我们记他为“红+黑”</code><br>  <img src="/./assets/16_11.png" srcset="/img/loading.gif" lazyload></p>
+<p><code>情况2:这个新的节点，也就是删掉节点的子节点是黑的并且这个子节点当了树根（删掉的是根吗？思考一下）</code>   <img src="/./assets/16_12.png" srcset="/img/loading.gif" lazyload></p>
+<p><code>情况3:这个新节点是黑的，即“黑+黑，且没当树根”，这个我们又要将其分为四种情况</code> </p>
+<ul>
+<li><p>当前节点是“B+B”,且兄弟的节点是红的<br>  <img src="/./assets/16_13.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>当前节点是“B+B”，且兄弟节点是黑的，且兄弟节点的两个子节点也是黑的<br>  <img src="/./assets/16_14.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>当前节点“B+B”，且兄弟是黑的，且兄弟右树是黑的，左树是红的<br>（什么问我左树是黑怎么办?怎么办？这话问的出来，那不就是左右都黑吗？）<br>  <img src="/./assets/16_15.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>当前节点“B+B”，且兄弟是黑的，且右子树是红的（不考虑左子树）<br>  <img src="/./assets/16_16.png" srcset="/img/loading.gif" lazyload></p>
+<p>现在我们基本了解了删除操作，来上手体验一下代码吧：</p>
+</li>
+</ul>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">delete</span><span class="hljs-params">(<span class="hljs-type">int</span> val)</span>&#123;<br>        <span class="hljs-type">RBNode</span> <span class="hljs-variable">avl</span> <span class="hljs-operator">=</span> find(root , val);<br>        <span class="hljs-keyword">if</span> (avl != <span class="hljs-literal">null</span>)&#123;<br>            delete(avl);<br>        &#125;<span class="hljs-keyword">else</span> &#123;<br>            System.out.println(<span class="hljs-string">&quot;节点不存在，删个毛线&quot;</span>);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">delete</span><span class="hljs-params">(RBNode avl)</span>&#123;<br>        <span class="hljs-keyword">if</span> (avl.left != <span class="hljs-literal">null</span> &amp;&amp; avl.right != <span class="hljs-literal">null</span>)&#123;<br>            deleteDoubleChild(avl);<br>        &#125;<br>        <span class="hljs-keyword">if</span> (avl.left == <span class="hljs-literal">null</span> &amp;&amp; avl.right == <span class="hljs-literal">null</span>)&#123;<br>            deleteNoChild(avl);<br>        &#125;<br>        <span class="hljs-keyword">if</span> (avl.left != <span class="hljs-literal">null</span>)&#123;<br>            deleteLeftChild(avl);<br>        &#125;<br>        <span class="hljs-keyword">if</span> (avl.right != <span class="hljs-literal">null</span>)&#123;<br>            deleteRightChild(avl);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">deleteRightChild</span><span class="hljs-params">(RBNode avl)</span> &#123;<br>        <span class="hljs-type">RBNode</span> <span class="hljs-variable">child</span> <span class="hljs-operator">=</span> avl.right;<br>        <span class="hljs-type">RBNode</span> <span class="hljs-variable">parent</span> <span class="hljs-operator">=</span> avl.parent;<br>        <span class="hljs-type">boolean</span> <span class="hljs-variable">color</span> <span class="hljs-operator">=</span> avl.color;<br>        <span class="hljs-keyword">if</span> (avl.parent != <span class="hljs-literal">null</span>)&#123;<br>            <span class="hljs-keyword">if</span> (parent.left == avl)&#123;<br>                parent.left = child;<br>                child.parent = parent;<br>            &#125;<span class="hljs-keyword">else</span> &#123;<br>                parent.right = child;<br>                child.parent = parent;<br>            &#125;<br>        &#125;<span class="hljs-keyword">else</span> &#123;<br>            root = avl.right;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (color == black)&#123;<br>            deleteFixUp(child , parent);<br>        &#125;<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">deleteLeftChild</span><span class="hljs-params">(RBNode avl)</span> &#123;<br>        <span class="hljs-type">RBNode</span> <span class="hljs-variable">child</span> <span class="hljs-operator">=</span> avl.left;<br>        <span class="hljs-type">RBNode</span> <span class="hljs-variable">parent</span> <span class="hljs-operator">=</span> avl.parent;<br>        <span class="hljs-type">boolean</span> <span class="hljs-variable">color</span> <span class="hljs-operator">=</span> avl.color;<br>        <span class="hljs-keyword">if</span> (avl.parent != <span class="hljs-literal">null</span>)&#123;<br>            <span class="hljs-keyword">if</span> (parent.left == avl)&#123;<br>                parent.left = child;<br>                child.parent = parent;<br>            &#125;<span class="hljs-keyword">else</span> &#123;<br>                parent.right = child;<br>                child.parent = parent;<br>            &#125;<br>        &#125;<span class="hljs-keyword">else</span> &#123;<br>            root = avl.left;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (color == black)&#123;<br>            deleteFixUp(child , parent);<br>        &#125;<br>        <span class="hljs-keyword">return</span>;<br><br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">deleteNoChild</span><span class="hljs-params">(RBNode avl)</span> &#123;<br>        <span class="hljs-type">RBNode</span> <span class="hljs-variable">child</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-type">RBNode</span> <span class="hljs-variable">parent</span> <span class="hljs-operator">=</span> avl.parent;<br>        <span class="hljs-type">boolean</span> <span class="hljs-variable">color</span> <span class="hljs-operator">=</span> avl.color;<br>        <span class="hljs-keyword">if</span> (avl.parent != <span class="hljs-literal">null</span>)&#123;<br>            <span class="hljs-keyword">if</span> (avl.parent.left == avl)&#123;<br>                avl.parent.left = <span class="hljs-literal">null</span>;<br>            &#125;<span class="hljs-keyword">else</span> &#123;<br>                avl.parent.right = <span class="hljs-literal">null</span>;<br>            &#125;<br>        &#125;<span class="hljs-keyword">else</span> &#123;<br>            root = <span class="hljs-literal">null</span>;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (avl.color == black)&#123;<br>            <span class="hljs-comment">//红节点不用管，删了不影响RBTree只有删黑点的时候要修正</span><br>            deleteFixUp(child , parent);<br>        &#125;<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">deleteDoubleChild</span><span class="hljs-params">(RBNode avl)</span> &#123;<br>        <span class="hljs-comment">//找到右子树的最大即后继节点</span><br>        <span class="hljs-type">RBNode</span> <span class="hljs-variable">rep</span> <span class="hljs-operator">=</span> min(avl.right);<br>        avl.val = rep.val;<br>        delete(rep);<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">deleteFixUp</span><span class="hljs-params">(RBNode avl , RBNode parent)</span> &#123;<br>        RBNode brother;<br>        <span class="hljs-keyword">while</span> ((avl == <span class="hljs-literal">null</span> || avl.color == black) &amp;&amp; avl != root)&#123;<br>            <span class="hljs-keyword">if</span> (avl == parent.left)&#123;<br>                brother = parent.right;<br>                <span class="hljs-keyword">if</span> (brother.color == red)&#123;<br>                    brother.color = black;<br>                    parent.color = red;<br>                    turnLeft(parent);<br>                    brother = parent.right;<br>                &#125;<br>                <span class="hljs-comment">//这步走完兄弟肯定黑</span><br>                <span class="hljs-keyword">if</span> ((brother.left == <span class="hljs-literal">null</span> || brother.left.color == black) &amp;&amp; (brother.right == <span class="hljs-literal">null</span> || brother.right.color == black))&#123;<br>                    brother.color = red;<br>                    avl = parent;<br>                    parent = parent.parent;<br>                &#125;<span class="hljs-keyword">else</span> &#123;<br>                    <span class="hljs-keyword">if</span> (brother.right.color == black)&#123;<br>                        <span class="hljs-comment">//说明左树是红的</span><br>                        brother.left.color = black;<br>                        brother.color = red;<br>                        turnRight(brother);<br>                        brother = parent.right;<br>                    &#125;<br>                    <span class="hljs-comment">//截止这里他兄弟右树肯定红了，我怎么知道？你猜上一步旋转是为了什么</span><br>                    brother.color = parent.color;<br>                    parent.color = black;<br>                    brother.right.color = black;<br>                    turnLeft(parent);<br>                    avl = root;<span class="hljs-comment">//其实下一圈循环也就跳出了</span><br>                    <span class="hljs-keyword">break</span>;<br>                &#125;<br>            &#125;<span class="hljs-keyword">else</span> &#123;<br>                brother = parent.left;<br>                <span class="hljs-keyword">if</span> (brother.color == red)&#123;<br>                    brother.color = black;<br>                    parent.color = red;<br>                    turnRight(parent);<br>                    brother = parent.left;<br>                &#125;<br>                <span class="hljs-keyword">if</span> ((brother.left == <span class="hljs-literal">null</span> || brother.left.color == black) &amp;&amp; (brother.right == <span class="hljs-literal">null</span> || brother.right.color == black))&#123;<br>                    brother.color = red;<br>                    avl = parent;<br>                    parent = parent.parent;<br>                &#125;<span class="hljs-keyword">else</span> &#123;<br>                    <span class="hljs-keyword">if</span> (brother.left.color == black)&#123;<br>                        brother.right.color = black;<br>                        brother.color = red;<br>                        turnLeft(brother);<br>                        brother = parent.left;<br>                    &#125;<br>                    brother.color = parent.color;<br>                    parent.color = black;<br>                    brother.left.color = black;<br>                    turnRight(parent);<br>                    avl = root;<br>                    <span class="hljs-keyword">break</span>;<br>                &#125;<br>            &#125;<br>            <span class="hljs-comment">//到现在avl要么是树根，要么一开始就是红的我们把他不管怎样涂黑</span><br>            <span class="hljs-keyword">if</span> (avl != <span class="hljs-literal">null</span>)&#123;<br>                avl.color = black;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">private</span> RBNode <span class="hljs-title function_">min</span><span class="hljs-params">(RBNode root)</span>&#123;<br>        <span class="hljs-keyword">if</span> (root.left == <span class="hljs-literal">null</span>)&#123;<br>            <span class="hljs-keyword">return</span> root;<br>        &#125;<br>        <span class="hljs-keyword">return</span> min(root.left);<br>    &#125;<br>    <span class="hljs-keyword">private</span> RBNode <span class="hljs-title function_">max</span><span class="hljs-params">(RBNode root)</span>&#123;<br>        <span class="hljs-keyword">if</span> (root.right == <span class="hljs-literal">null</span>)&#123;<br>            <span class="hljs-keyword">return</span> root;<br>        &#125;<br>        <span class="hljs-keyword">return</span> max(root.right);<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>删除总结：其实这个东西就像转魔方，情况3的四种情况都是魔方中可能发生的路径，但是正确的解也就是唯一出口只有第四种，所以我们就不断的迭代进行旋转变化，直到兄弟是黑，且远离当前节点的兄弟子树是红时，我们执行秘籍（魔方也是第三层才有秘籍哟）【当然有些外挂玩家不要秘籍一个脑子想21个块比如情况2在满足情况时也会停止迭代】</p>
+</blockquote>
+<p>到这里完整的删除我们已经理解了，我想你应该依然是有如下几个问题（没有的话好兄弟，我再给你一张反思券，好好反思一下为啥没发现，嗯？为什么还会发现不了问题？文章最后有具体操作的完整代码可供参考）</p>
+<blockquote>
+<ol>
+<li><p><code>为什么修正操作孩子节点有一个，我们怎么选择</code><br>解：其实仔细看不难发现，如果有两个孩子我们通过替换操作，最后会变成删他的前驱或后继节点、而前驱或后继节点最多只能有一个孩子。所以这也是为什么两个孩子的删除我们没有修正操作。</p>
+</li>
+<li><p><code>为什么要加入默认黑这个思想</code> (这个东西想不起来提问就有问题了)<br>解：这样可以避免违反 <mark>规则二：根节点是黑节点</mark> 但是思想上我们违背了规则一，因为我们加入了一个特殊黑色，当然这是在想象上，所以。。。</p>
+</li>
+<li><p><code>有没有发现为什么B+B且兄弟是红的时候最后要让叔叔节点变成父节点右边</code><br>解：这个问题画图啊宝儿，不画图当然看不懂，其实叔叔一开始是父节点的右子树但是左旋后他已经变成了爷爷了，所以重置一下兄弟节点，以便后续操作</p>
+</li>
+<li><p><code>为什么处理完兄弟是红后，兄弟节点一定黑</code><br>解：看到代码不是else了吧，那为啥不画个图呢，因为旋转后兄弟的左子树成了当前节点的兄弟，但是兄弟以前是红的，规则4:红节点子树一定黑</p>
+</li>
+<li><p><code>唯一出口只有情况4吗？</code><br>解：我们要理解本质，当满足红黑树规则时我们就不进行迭代了，而之所以迭代是因为当前的一些操作影响到了红黑树的性质，所以要对影响到的位置一步一步迭代排查。其实第二种可能在满足条件时也会停止而情况三和时其实可以算在一起，因为情况3的解决一定会到情况4，情况三的操作也单纯时为了变换到情况4</p>
+</li>
+</ol>
+</blockquote>
+<p><code>最难理解的情况就是4，就像玩魔方，和找女朋友，不要局限于表面，试试换个思维，从C,E的黑节点个数入手，取推理，你会发现这棵树砸一眼看过去违反规则了，但是仔细推理你会发现每一个地方都出奇的合理，就像一些爱情故事，看上去疯狂男主又丑又老又矮又挫但是却赢走了你女神的芳心，而我们一直注意不到他可能是青蛙王子，家财万贯，温柔善良。不要局限于眼前，动手推理一下</code><br>  <img src="/./assets/16_16.png" srcset="/img/loading.gif" lazyload></p>
+<blockquote>
+<p>截止目前，红黑树我们告一段落，本文完整代码将至于 <a target="_blank" rel="noopener" href="https://gitee.com/HYDGOD/apple/tree/master/moudle/src/%E6%A0%91/%E7%BA%A2%E9%BB%91%E6%A0%91">Gitee</a> 仅供学习参考切勿搬运，后续将更新测试，并且更新网络、线程及spring的内容，敬请期待</p>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>红黑树及其相关操作（一遍包会）</div>
+      <div>http://example.com/2026/09/05/16_红黑树及其相关操作（一遍包会）/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>星期天</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年9月5日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2026/09/05/17_%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E7%9F%A5%E8%AF%86/" title="软件测试基本概念知识">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">软件测试基本概念知识</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/09/05/15_AVL%E6%A0%91%E5%8F%8A%E5%85%B6%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C/" title="AVL树及其相关操作">
+                        <span class="hidden-mobile">AVL树及其相关操作</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    function isExpandAllEnabled() {
+      return CONFIG.toc && CONFIG.toc.expand_all === true;
+    }
+    function expandAllToc() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .tocbot-is-collapsed').removeClass('tocbot-is-collapsed');
+    }
+    function updateTocToggle($li, $childList) {
+      var $toggle = $li.children('.toc-toggle');
+      if ($toggle.length === 0) { return; }
+      var collapsed = $childList.hasClass('tocbot-is-collapsed');
+      $toggle
+        .toggleClass('toc-toggle-collapsed', collapsed)
+        .toggleClass('toc-toggle-expanded', !collapsed);
+    }
+    function bindTocToggle() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .toc-list-item').each(function() {
+        var $li = jQuery(this);
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) {
+          if ($li.children('.toc-toggle').length === 0) {
+            $li.prepend('<span class="toc-toggle toc-toggle-placeholder" aria-hidden="true">›</span>');
+          }
+          return;
+        }
+
+        if ($li.children('.toc-toggle').length === 0) {
+          $li.prepend('<span class="toc-toggle toc-toggle-expanded" aria-hidden="true">›</span>');
+        }
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('click.tocToggle').on('click.tocToggle', '.toc-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $li = jQuery(this).parent('.toc-list-item');
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) { return; }
+        $childList.toggleClass('tocbot-is-collapsed');
+        updateTocToggle($li, $childList);
+      });
+      if (!window.__tocToggleObserver) {
+        window.__tocToggleObserver = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type !== 'attributes' || mutation.attributeName !== 'class') { return; }
+            var $list = jQuery(mutation.target);
+            var $li = $list.parent('.toc-list-item');
+            if ($li.length === 0) { return; }
+            updateTocToggle($li, $list);
+          });
+        });
+        jQuery('#toc-body ol').each(function() {
+          window.__tocToggleObserver.observe(this, { attributes: true });
+        });
+      }
+    }
+    var tocConfig = Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc);
+    if (isExpandAllEnabled()) {
+      tocConfig.collapseDepth = 6;
+    }
+    window.tocbot.init(tocConfig);
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+    expandAllToc();
+    bindTocToggle();
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+        expandAllToc();
+        bindTocToggle();
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

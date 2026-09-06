@@ -1,0 +1,937 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="星期天">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="定位元素方式id 定位id是页面元素的属性，我们最常用元素定位方式，但是不是所有的元素都有id的。如果一个元素有id属性，那么一般在整个页面是唯一的。所以我们一般可以用id来唯一的定位到这个元素   这里浅浅举一个百度的例子如下图所示：    代码示例：  12# send_keys(&quot;selenium&quot;)是在百度的输入框自动填入seleniumbrowser.find_ele">
+<meta property="og:type" content="article">
+<meta property="og:title" content="selenium简单常见操作（部分WebdriverAPI）">
+<meta property="og:url" content="http://example.com/2026/09/05/20_selenium%E7%AE%80%E5%8D%95%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C%EF%BC%88%E9%83%A8%E5%88%86WebdriverAPI%EF%BC%89/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="定位元素方式id 定位id是页面元素的属性，我们最常用元素定位方式，但是不是所有的元素都有id的。如果一个元素有id属性，那么一般在整个页面是唯一的。所以我们一般可以用id来唯一的定位到这个元素   这里浅浅举一个百度的例子如下图所示：    代码示例：  12# send_keys(&quot;selenium&quot;)是在百度的输入框自动填入seleniumbrowser.find_ele">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/assets/20_1.png">
+<meta property="og:image" content="http://example.com/assets/20_2.png">
+<meta property="og:image" content="http://example.com/assets/20_3.png">
+<meta property="og:image" content="http://example.com/assets/20_4.png">
+<meta property="og:image" content="http://example.com/assets/20_5.png">
+<meta property="og:image" content="http://example.com/assets/20_6.png">
+<meta property="og:image" content="http://example.com/assets/20_7.png">
+<meta property="og:image" content="http://example.com/assets/20_7.png">
+<meta property="og:image" content="http://example.com/assets/20_8.png">
+<meta property="article:published_time" content="2026-09-05T11:45:34.417Z">
+<meta property="article:modified_time" content="2026-09-06T03:34:55.608Z">
+<meta property="article:author" content="星期天">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/assets/20_1.png">
+  
+  
+  
+  <title>selenium简单常见操作（部分WebdriverAPI） - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="selenium简单常见操作（部分WebdriverAPI）"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        星期天
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-09-05 19:45" pubdate>
+          2026年9月5日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          38 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">selenium简单常见操作（部分WebdriverAPI）</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="定位元素方式"><a href="#定位元素方式" class="headerlink" title="定位元素方式"></a>定位元素方式</h3><h6 id="id-定位"><a href="#id-定位" class="headerlink" title="id 定位"></a>id 定位</h6><p><code>id是页面元素的属性，我们最常用元素定位方式，但是不是所有的元素都有id的。如果一个元素有id属性，那么一般在整个页面是唯一的。所以我们一般可以用id来唯一的定位到这个元素</code> </p>
+<blockquote>
+<p>这里浅浅举一个百度的例子如下图所示：<br>  <img src="/./assets/20_1.png" srcset="/img/loading.gif" lazyload></p>
+</blockquote>
+<p><mark>代码示例：</mark> </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># send_keys(&quot;selenium&quot;)是在百度的输入框自动填入selenium</span><br>browser.find_element_by_id(<span class="hljs-string">&quot;kw&quot;</span>).send_keys(<span class="hljs-string">&quot;selenium&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h6 id="name-定位"><a href="#name-定位" class="headerlink" title="name 定位"></a>name 定位</h6><p><code>这个东西不一定全局唯一，name是可以重名的，所以一般不建议用，确定唯一的话也可以用</code><br>  <img src="/./assets/20_2.png" srcset="/img/loading.gif" lazyload></p>
+<p><mark>代码示例：</mark> </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#通过name 方式定位 </span><br>browser.find_element_by_name(<span class="hljs-string">&quot;wd&quot;</span>).send_keys(<span class="hljs-string">&quot;selenium&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h6 id="tag-name-定位"><a href="#tag-name-定位" class="headerlink" title="tag name 定位"></a>tag name 定位</h6><p><code>这个东西不一定全局唯一，确定唯一的话也可以用</code><br>  <img src="/./assets/20_3.png" srcset="/img/loading.gif" lazyload></p>
+<p><mark>代码示例：</mark> </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#通过tag name 方式定位 </span><br>browser.find_element_by_tag_name(<span class="hljs-string">&quot;input&quot;</span>).send_keys(<span class="hljs-string">&quot;selenium&quot;</span>)<br><span class="hljs-comment">#不能成功，因为 input太多了不唯一。</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h6 id="class-name-定位"><a href="#class-name-定位" class="headerlink" title="class name 定位"></a>class name 定位</h6><p><code>存在并且全局唯一才可以定位到</code> </p>
+<p>  <img src="/./assets/20_4.png" srcset="/img/loading.gif" lazyload></p>
+<p><mark>代码示例：</mark> </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#通过class name 方式定位 </span><br>browser.find_element_by_class_name(<span class="hljs-string">&quot;s_ipt nobg_s_fm_focusnobg&quot;</span>).send_keys(<span class="hljs-string">&quot;selenium&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h6 id="CSS定位"><a href="#CSS定位" class="headerlink" title="CSS定位"></a>CSS定位</h6><p><code>CSS 使用选择器来为页面元素绑定属性。这些选择器可以被selenium 用作另外的定位策略。</code><br>  <img src="/./assets/20_5.png" srcset="/img/loading.gif" lazyload></p>
+<p><mark>代码示例：</mark> </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#通过CSS 方式定位 </span><br>browser.find_element_by_css_selector(<span class="hljs-string">&quot;#kw&quot;</span>).send_keys(<span class="hljs-string">&quot;selenium&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h6 id="XPath定位-这个是重点哟～"><a href="#XPath定位-这个是重点哟～" class="headerlink" title="XPath定位(这个是重点哟～)"></a>XPath定位(这个是重点哟～)</h6><p><code>因为他一定一定可以定位到而且比较方便</code><br>双击（右键）需要查找需要xpath的元素，拷贝中选择XPath<br>  <img src="/./assets/20_6.png" srcset="/img/loading.gif" lazyload></p>
+<p><mark>代码示例：</mark> </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#通过xphan 方式定位 </span><br>browser.find_element_by_xpath(<span class="hljs-string">&quot;//*[@id=&quot;</span>kw<span class="hljs-string">&quot;]&quot;</span>).send_keys(<span class="hljs-string">&quot;selenium&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h6 id="linktext定位"><a href="#linktext定位" class="headerlink" title="linktext定位"></a>linktext定位</h6><p><code>有时候不是一个输入框也不是一个按钮，而是一个文字链接，我们可以通过链接内容，也就是 link text来定位。需要注意的是链接内容必须这个页面唯一，否则会报错。</code><br>  <img src="/./assets/20_7.png" srcset="/img/loading.gif" lazyload></p>
+<p><mark>代码示例：</mark> </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">browser.find_element_by_link_text(<span class="hljs-string">&quot;hao123&quot;</span>).click()<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h6 id="Partial-link-text-定位"><a href="#Partial-link-text-定位" class="headerlink" title="Partial link text 定位"></a>Partial link text 定位</h6><p><code>通过部分链接定位，。拿上面的例子，我可以只用链接的一部分文字进行匹配</code><br>  <img src="/./assets/20_7.png" srcset="/img/loading.gif" lazyload></p>
+<p><mark>代码示例：</mark> </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">browser.find_element_by_partial_link_text(<span class="hljs-string">&quot;hao&quot;</span>).click()<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="操作测试对象"><a href="#操作测试对象" class="headerlink" title="操作测试对象"></a>操作测试对象</h3><p><code>定位元素我们略知一二了，定位只是第一步，定位之后需要对这个元素进行操作，例如鼠标点击或者键盘输入，或者清除元素的内容，或者提交表单等。这个取决于定位元素需要进行的下一步操作。</code> </p>
+<blockquote>
+<p>这个我们在定位的时候已经见了很多了，这一类都大概这样写<br>  <img src="/./assets/20_8.png" srcset="/img/loading.gif" lazyload></p>
+</blockquote>
+<h6 id="操作方法"><a href="#操作方法" class="headerlink" title="操作方法"></a>操作方法</h6><blockquote>
+<ol>
+<li><p>send_keys() 在对象上模拟按键输入</p>
+</li>
+<li><p>click() 点击对象</p>
+</li>
+<li><p>clear() 清除对象输入的文本内容</p>
+</li>
+<li><p>submit() 提交（与click大方向基本一致）</p>
+</li>
+<li><p>sleep() 休眠</p>
+</li>
+<li><p>implicitly_wait() 隐式等待&#x2F;只能等待</p>
+</li>
+</ol>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># coding = utf-8 </span><br><span class="hljs-keyword">from</span> selenium <span class="hljs-keyword">import</span> webdriver <br><span class="hljs-keyword">import</span> time <span class="hljs-comment">#调入time 函数 </span><br>browser = webdriver.Chrome() <br>browser.get(<span class="hljs-string">&quot;http://www.baidu.com&quot;</span>) <br>browser.implicitly_wait(<span class="hljs-number">30</span>) <span class="hljs-comment">#隐式等待30秒 </span><br>browser.find_element_by_id(<span class="hljs-string">&quot;kw&quot;</span>).send_keys(<span class="hljs-string">&quot;selenium&quot;</span>) <br>time.sleep(<span class="hljs-number">6</span>)<br>browser.find_element_by_id(<span class="hljs-string">&quot;kw&quot;</span>).clear()<br> browser.find_element_by_id(<span class="hljs-string">&quot;kw&quot;</span>).send_keys(<span class="hljs-string">&quot;selenium&quot;</span>)<br>browser.find_element_by_id(<span class="hljs-string">&quot;su&quot;</span>).click()<br><span class="hljs-comment"># browser.find_element_by_id(&quot;su&quot;).submit() 这里与click一致</span><br>browser.quit()<span class="hljs-comment">#退出</span><br></code></pre></td></tr></table></figure>
+
+<h6 id="获取信息"><a href="#获取信息" class="headerlink" title="获取信息"></a>获取信息</h6><blockquote>
+<ol>
+<li><p>.text 用于获取元素的文本信息</p>
+</li>
+<li><p>.title 用于获取title</p>
+</li>
+<li><p>.current_url 用于获取url</p>
+</li>
+</ol>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#coding = utf-8 </span><br><span class="hljs-keyword">from</span> selenium <span class="hljs-keyword">import</span> webdriver <br>driver = webdriver.Chrome() <br>driver.get(<span class="hljs-string">&#x27;http://www.baidu.com&#x27;</span>) <br>data=browser.find_element_by_id(<span class="hljs-string">&quot;kw&quot;</span>).text <span class="hljs-comment">#text获取到data</span><br><span class="hljs-built_in">print</span>(driver.title) <span class="hljs-comment"># 把页面title 打印出来</span><br><span class="hljs-built_in">print</span>(driver.current_url) <span class="hljs-comment"># 把页面url 打印出来</span><br></code></pre></td></tr></table></figure>
+
+<h6 id="浏览器的操作"><a href="#浏览器的操作" class="headerlink" title="浏览器的操作"></a>浏览器的操作</h6><blockquote>
+<ol>
+<li><p>.maximize_window() 浏览器最大化</p>
+</li>
+<li><p>.set_window_size(width, high) 设置浏览器宽、高</p>
+</li>
+<li><p>.browser.forward() 操作浏览器的前进</p>
+</li>
+<li><p>.browser.back() 操作浏览器后退</p>
+</li>
+<li><p>document.documentElement.scrollTop&#x3D;0 将浏览器滚动条滑到最顶端</p>
+</li>
+<li><p>document.documentElement.scrollTop&#x3D;10000 将浏览器滚动条滑到最底端<br><code>小tips：滚动条的操作是依靠js脚本哟~</code></p>
+</li>
+</ol>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#coding=utf-8 </span><br><span class="hljs-keyword">from</span> selenium <span class="hljs-keyword">import</span> webdriver <br><span class="hljs-keyword">import</span> time <br><span class="hljs-comment">#访问百度 </span><br>driver=webdriver.Chrome() <br><span class="hljs-comment">#访问百度首页 </span><br>first_url= <span class="hljs-string">&#x27;http://www.baidu.com&#x27;</span> <br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;now access %s&quot;</span> %(first_url))<br>driver.get(first_url) <br>time.sleep(<span class="hljs-number">2</span>)<br> <span class="hljs-comment">#访问新闻页面 </span><br>second_url=<span class="hljs-string">&#x27;http://news.baidu.com&#x27;</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;now access %s&quot;</span> %(second_url))<br>driver.get(second_url) <br>time.sleep(<span class="hljs-number">2</span>)<br><span class="hljs-comment">#返回（后退）到百度首页 </span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;back to %s &quot;</span>%(first_url)) <br>driver.back() <br>time.sleep(<span class="hljs-number">1</span>) <br><span class="hljs-comment">#前进到新闻页 </span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;forward to %s&quot;</span>%(second_url)) <br>driver.forward() <br>time.sleep(<span class="hljs-number">2</span>)<br>driver.get(<span class="hljs-string">&quot;http://www.baidu.com&quot;</span>) <br><span class="hljs-comment">#搜索 </span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;设置浏览器宽480、高800显示&quot;</span>)<br>driver.set_window_size(<span class="hljs-number">480</span> , <span class="hljs-number">800</span>)<br>time.sleep(<span class="hljs-number">3</span>)<br>driver.maximize_window() <span class="hljs-comment">#将浏览器最大化显示</span><br>driver.find_element_by_id(<span class="hljs-string">&quot;kw&quot;</span>).send_keys(<span class="hljs-string">&quot;selenium&quot;</span>) <br>driver.find_element_by_id(<span class="hljs-string">&quot;su&quot;</span>).click() time.sleep(<span class="hljs-number">3</span>)<br><span class="hljs-comment">#将页面滚动条拖到底部</span><br>js=<span class="hljs-string">&quot;var q=document.documentElement.scrollTop=10000&quot;</span> <br>driver.execute_script(js) time.sleep(<span class="hljs-number">3</span>)<br><span class="hljs-comment">#将滚动条移动到页面的顶部</span><br>js=<span class="hljs-string">&quot;var q=document.documentElement.scrollTop=0&quot;</span> <br>driver.execute_script(js) <br>time.sleep(<span class="hljs-number">3</span>) <br>driver.quit()<br></code></pre></td></tr></table></figure>
+
+<h6 id="键盘事件"><a href="#键盘事件" class="headerlink" title="键盘事件"></a>键盘事件</h6><blockquote>
+<ol>
+<li><p>send_keys()调用按键：<br><mark>引入键盘键要掉用这个包：from selenium.webdriver.common.keys import Keys</mark><br><code>例1:send_keys(Keys.TAB) # TAB</code><br><code>例2:send_keys(Keys.ENTER) # 回车</code></p>
+</li>
+<li><p>键盘组合键用法(下面是windows的操作Mac是command)<br><code>例1:send_keys(Keys.CONTROL,&#39;a&#39;) #全选（Ctrl+A）</code><br><code>例2:send_keys(Keys.CONTROL,&#39;c&#39;) #复制（Ctrl+C）</code></p>
+</li>
+</ol>
+</blockquote>
+<h6 id="鼠标事件"><a href="#鼠标事件" class="headerlink" title="鼠标事件"></a>鼠标事件</h6><p><mark>from selenium.webdriver.common.action_chains import ActionChains</mark> </p>
+<blockquote>
+<ol>
+<li><p>.context_click() 右击</p>
+</li>
+<li><p>.click() 单击</p>
+</li>
+<li><p>.double_click() 双击</p>
+</li>
+<li><p>.drag_and_drop(element, target) 拖动 从element元素到target</p>
+</li>
+<li><p>.move_to_element(element) 移动 移动到element</p>
+</li>
+<li><p>ActionChains(driver)生成用户的行为。所有的行动都存储在actionchains 对象。</p>
+</li>
+<li><p>.perform()通过perform()存储的行为。<br><code>例：#鼠标拖动事件 ActionChains(driver).move_to_element(element).perform()</code></p>
+</li>
+</ol>
+</blockquote>
+<hr>
+<h3 id="多层定位"><a href="#多层定位" class="headerlink" title="多层定位"></a>多层定位</h3><blockquote>
+<ol>
+<li><p>定位一个框架 ：switch_to.frame(name_or_id_or_frame_element)<br><code>注：如果要定位到某一个层级，必须从默认页面跳转（其实外部框架可以向内部框架跳转，但是建议先跳默认在随便跳）</code></p>
+</li>
+<li><p>定位一个窗口：switch_to.window(name_or_id_or_window_element)</p>
+</li>
+<li><p>switch_to.default_content：从frame中嵌入的页面里跳出，跳回到最外面的默认页面中。</p>
+</li>
+</ol>
+</blockquote>
+<p><code>selenium的操作就介绍到这里，当然不止这些，后续其他就自己百度开发咯</code> </p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>selenium简单常见操作（部分WebdriverAPI）</div>
+      <div>http://example.com/2026/09/05/20_selenium简单常见操作（部分WebdriverAPI）/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>星期天</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年9月5日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2026/09/05/21_%E5%9B%9E%E6%BA%AF%E5%8F%8A%E5%85%B6%E7%AE%80%E5%8D%95%E9%A2%98%E7%9B%AE%E7%A4%BA%E4%BE%8B/" title="回溯及其简单题目示例">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">回溯及其简单题目示例</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/09/05/19_Safari%E6%B5%8F%E8%A7%88%E5%99%A8%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%EF%BC%88Python%E8%84%9A%E6%9C%AC%E6%B5%8B%E8%AF%95%EF%BC%89/" title="Safari浏览器自动化测试（Python脚本测试）">
+                        <span class="hidden-mobile">Safari浏览器自动化测试（Python脚本测试）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    function isExpandAllEnabled() {
+      return CONFIG.toc && CONFIG.toc.expand_all === true;
+    }
+    function expandAllToc() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .tocbot-is-collapsed').removeClass('tocbot-is-collapsed');
+    }
+    function updateTocToggle($li, $childList) {
+      var $toggle = $li.children('.toc-toggle');
+      if ($toggle.length === 0) { return; }
+      var collapsed = $childList.hasClass('tocbot-is-collapsed');
+      $toggle
+        .toggleClass('toc-toggle-collapsed', collapsed)
+        .toggleClass('toc-toggle-expanded', !collapsed);
+    }
+    function bindTocToggle() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .toc-list-item').each(function() {
+        var $li = jQuery(this);
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) {
+          if ($li.children('.toc-toggle').length === 0) {
+            $li.prepend('<span class="toc-toggle toc-toggle-placeholder" aria-hidden="true">›</span>');
+          }
+          return;
+        }
+
+        if ($li.children('.toc-toggle').length === 0) {
+          $li.prepend('<span class="toc-toggle toc-toggle-expanded" aria-hidden="true">›</span>');
+        }
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('click.tocToggle').on('click.tocToggle', '.toc-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $li = jQuery(this).parent('.toc-list-item');
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) { return; }
+        $childList.toggleClass('tocbot-is-collapsed');
+        updateTocToggle($li, $childList);
+      });
+      if (!window.__tocToggleObserver) {
+        window.__tocToggleObserver = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type !== 'attributes' || mutation.attributeName !== 'class') { return; }
+            var $list = jQuery(mutation.target);
+            var $li = $list.parent('.toc-list-item');
+            if ($li.length === 0) { return; }
+            updateTocToggle($li, $list);
+          });
+        });
+        jQuery('#toc-body ol').each(function() {
+          window.__tocToggleObserver.observe(this, { attributes: true });
+        });
+      }
+    }
+    var tocConfig = Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc);
+    if (isExpandAllEnabled()) {
+      tocConfig.collapseDepth = 6;
+    }
+    window.tocbot.init(tocConfig);
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+    expandAllToc();
+    bindTocToggle();
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+        expandAllToc();
+        bindTocToggle();
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

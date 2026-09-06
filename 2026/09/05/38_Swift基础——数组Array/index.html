@@ -1,0 +1,865 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="星期天">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Swift基础——数组Array 数组：使用有序列表存储同一类型的多个值，相同值可出现在一个数组的不同位置。  数组简介首先，和String一样我们也来看看他的一些Api方法常规操作方法  reverse、reversed：数组反转  reverse()在原数组操作，reversed()返回新的数组不会操作破坏原数组swapAt：指定索引位置交换  记住startIndex这些索引是从“1”开始数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Swift基础——数组Array">
+<meta property="og:url" content="http://example.com/2026/09/05/38_Swift%E5%9F%BA%E7%A1%80%E2%80%94%E2%80%94%E6%95%B0%E7%BB%84Array/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Swift基础——数组Array 数组：使用有序列表存储同一类型的多个值，相同值可出现在一个数组的不同位置。  数组简介首先，和String一样我们也来看看他的一些Api方法常规操作方法  reverse、reversed：数组反转  reverse()在原数组操作，reversed()返回新的数组不会操作破坏原数组swapAt：指定索引位置交换  记住startIndex这些索引是从“1”开始数">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/assets/38_1.png">
+<meta property="og:image" content="http://example.com/assets/38_2.png">
+<meta property="og:image" content="http://example.com/assets/38_3.png">
+<meta property="og:image" content="http://example.com/assets/38_4.png">
+<meta property="og:image" content="http://example.com/assets/38_5.png">
+<meta property="og:image" content="http://example.com/assets/38_6.png">
+<meta property="og:image" content="http://example.com/assets/38_7.png">
+<meta property="og:image" content="http://example.com/assets/38_8.png">
+<meta property="og:image" content="http://example.com/assets/38_9.png">
+<meta property="og:image" content="http://example.com/assets/38_10.png">
+<meta property="og:image" content="http://example.com/assets/38_11.png">
+<meta property="og:image" content="http://example.com/assets/38_12.png">
+<meta property="og:image" content="http://example.com/assets/38_13.png">
+<meta property="og:image" content="http://example.com/assets/38_14.png">
+<meta property="og:image" content="http://example.com/assets/38_15.png">
+<meta property="og:image" content="http://example.com/assets/38_16.png">
+<meta property="og:image" content="http://example.com/assets/38_17.png">
+<meta property="og:image" content="http://example.com/assets/38_18.png">
+<meta property="og:image" content="http://example.com/assets/38_19.png">
+<meta property="og:image" content="http://example.com/assets/38_20.png">
+<meta property="og:image" content="http://example.com/assets/38_21.png">
+<meta property="og:image" content="http://example.com/assets/38_22.png">
+<meta property="og:image" content="http://example.com/assets/38_23.png">
+<meta property="og:image" content="http://example.com/assets/38_24.png">
+<meta property="og:image" content="http://example.com/assets/38_25.png">
+<meta property="og:image" content="http://example.com/assets/38_26.png">
+<meta property="og:image" content="http://example.com/assets/38_27.png">
+<meta property="article:published_time" content="2026-09-05T11:45:35.409Z">
+<meta property="article:modified_time" content="2026-09-06T03:37:55.797Z">
+<meta property="article:author" content="星期天">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/assets/38_1.png">
+  
+  
+  
+  <title>Swift基础——数组Array - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content (desktop) -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile grid menu overlay -->
+<div id="mobile-grid-menu" class="d-lg-none">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-home-fill"></i>
+                  <span>首页</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/archives/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-archive-fill"></i>
+                  <span>归档</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/categories/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-category-fill"></i>
+                  <span>分类</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/tags/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-tags-fill"></i>
+                  <span>标签</span>
+                </div>
+              </a>
+            </div>
+          
+        
+          
+          
+          
+          
+            <div class="col-4 mobile-grid-cell">
+              <a href="/about/" target="_self">
+                <div class="mobile-grid-item">
+                  <i class="iconfont icon-user-fill"></i>
+                  <span>关于</span>
+                </div>
+              </a>
+            </div>
+          
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-search-btn">
+            <a href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-search"></i>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        
+        
+          <div class="col-4 mobile-grid-cell" id="mobile-color-toggle-btn"
+               data-label-light="开灯"
+               data-label-dark="关灯">
+            <a href="javascript:;" aria-label="Color Toggle">
+              <div class="mobile-grid-item">
+                <i class="iconfont icon-dark" id="mobile-color-toggle-icon"></i>
+                <span id="mobile-color-toggle-label">关灯</span>
+              </div>
+            </a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Swift基础——数组Array"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        星期天
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-09-05 19:45" pubdate>
+          2026年9月5日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          47 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Swift基础——数组Array</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="Swift基础——数组Array"><a href="#Swift基础——数组Array" class="headerlink" title="Swift基础——数组Array"></a>Swift基础——数组Array</h2><blockquote>
+<p>数组：使用有序列表存储同一类型的多个值，相同值可出现在一个数组的不同位置。</p>
+</blockquote>
+<h3 id="数组简介"><a href="#数组简介" class="headerlink" title="数组简介"></a>数组简介</h3><p>首先，和String一样我们也来看看他的一些Api方法<br><code>常规操作方法</code><br> <img src="/./assets/38_1.png" srcset="/img/loading.gif" lazyload alt="常规方法"></p>
+<p><code>reverse、reversed：数组反转</code><br> <img src="/./assets/38_2.png" srcset="/img/loading.gif" lazyload alt="反转"></p>
+<p><mark>reverse()在原数组操作，reversed()返回新的数组不会操作破坏原数组</mark><br><code>swapAt：指定索引位置交换</code><br> <img src="/./assets/38_3.png" srcset="/img/loading.gif" lazyload alt="交换"></p>
+<p><mark>记住startIndex这些索引是从“1”开始数的哦</mark><br><code>数组添加合并</code><br> <img src="/./assets/38_4.png" srcset="/img/loading.gif" lazyload alt="添加合并"></p>
+<p><code>数组元素替换</code><br> <img src="/./assets/38_5.png" srcset="/img/loading.gif" lazyload alt="替换"></p>
+<p><code>数组增删</code><br> <img src="/./assets/38_6.png" srcset="/img/loading.gif" lazyload alt="增删"></p>
+<p>当然删除等这些运用加以其他操作就会变得很神奇，我们尝试使用闭包语句来感受一下：<br> <img src="/./assets/38_7.png" srcset="/img/loading.gif" lazyload alt="闭包演示"></p>
+<p>排序我们都知道默认升序，我们可以使用闭包使其降序排序：<br> <img src="/./assets/38_8.png" srcset="/img/loading.gif" lazyload alt="闭包排序"></p>
+<p>到这里，尾部加ed大概应该能看出来是什么意思了吧，既然氛围铺垫到这里了，那就再演示一个排序例子吧：<br> <img src="/./assets/38_9.png" srcset="/img/loading.gif" lazyload alt="字符串长度排序"></p>
+<p>下面看看这些简单一维数组用到的代码示例吧</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-comment">//import UIKit</span><br><br><span class="hljs-keyword">import</span> Foundation<br><span class="hljs-keyword">import</span> Darwin<br><br><span class="hljs-comment">//定义数组</span><br><span class="hljs-keyword">var</span> arrString <span class="hljs-operator">=</span> <span class="hljs-type">Array</span>&lt;<span class="hljs-type">String</span>&gt;()<br><span class="hljs-keyword">var</span> arrFloat <span class="hljs-operator">=</span> <span class="hljs-type">Array</span>&lt;<span class="hljs-type">Float</span>&gt;()<br><span class="hljs-keyword">var</span> arrFloat2 <span class="hljs-operator">=</span> [<span class="hljs-type">Float</span>]()<br><span class="hljs-keyword">var</span> arrString2 <span class="hljs-operator">=</span> [<span class="hljs-type">String</span>]()<br><span class="hljs-comment">//定义数组并赋值</span><br><span class="hljs-keyword">var</span> arrInt <span class="hljs-operator">=</span> [<span class="hljs-number">0</span> , <span class="hljs-number">1</span> , <span class="hljs-number">2</span> , <span class="hljs-number">3</span> , <span class="hljs-number">4</span> ]<br><span class="hljs-comment">//查看数组中元素数量</span><br>arrInt.count<br><span class="hljs-comment">//判空</span><br>arrInt.isEmpty<br><span class="hljs-comment">//是否包含指定元素</span><br>arrInt.contains(<span class="hljs-number">3</span>)<br><span class="hljs-comment">//分别获取数组首个和末尾元素</span><br>arrInt.first<br>arrInt.last<br><span class="hljs-comment">//分别获取数组中最大和最小元素</span><br>arrInt.max();<br>arrInt.min();<br><span class="hljs-comment">//数组反转</span><br>arrInt.reverse()<br>arrInt.reversed()<br><br><span class="hljs-comment">//交换指定索引位置的元素</span><br>arrInt.swapAt(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>)<br>arrInt.swapAt(arrInt.startIndex , arrInt.endIndex <span class="hljs-operator">-</span> <span class="hljs-number">1</span>)<br><span class="hljs-comment">//打乱数组顺序让数组内所有元素随机排列</span><br>arrInt.shuffled()<br>arrInt.shuffle()<br><span class="hljs-comment">//数组可以直接进行元素合并</span><br>arrInt <span class="hljs-operator">+=</span> [<span class="hljs-number">5</span>]<br><span class="hljs-comment">//数组添加元素末尾添加</span><br>arrInt.append(<span class="hljs-number">6</span>)<br><span class="hljs-comment">//把数组索引换成另一些元素</span><br>arrInt[<span class="hljs-number">2</span><span class="hljs-operator">...</span><span class="hljs-number">4</span>] <span class="hljs-operator">=</span> [<span class="hljs-number">7</span>]<br>arrInt<br>arrInt[<span class="hljs-number">0</span>] <span class="hljs-operator">=</span> <span class="hljs-number">1</span><br><br>arrInt<br><span class="hljs-comment">//插入:在数组索引1位置插入10</span><br>arrInt.insert(<span class="hljs-number">10</span>, at: <span class="hljs-number">1</span>)<br><span class="hljs-comment">//删除:删除第一个元素索引0位置，并返回删除后数组</span><br>arrInt.dropFirst()<br><span class="hljs-comment">//删除最后一个元素并返回被删除后的元素</span><br>arrInt.popLast()<br>arrInt<br><span class="hljs-comment">//删除指定位置元素</span><br>arrInt.remove(at: <span class="hljs-number">1</span>)<br><span class="hljs-comment">//删除素质里的所有元素</span><br>arrInt.removeAll()<br><br><br><span class="hljs-keyword">var</span> strArr <span class="hljs-operator">=</span> [<span class="hljs-string">&quot;张鑫乐&quot;</span> , <span class="hljs-string">&quot;张三&quot;</span> , <span class="hljs-string">&quot;张员外&quot;</span> , <span class="hljs-string">&quot;嫦娥&quot;</span> , <span class="hljs-string">&quot;乐宝&quot;</span>]<br><span class="hljs-comment">//使用闭包删除所有“张”开头的元素</span><br>strArr.removeAll&#123;<span class="hljs-variable">$0</span>.hasPrefix(<span class="hljs-string">&quot;张&quot;</span>)&#125;<br>strArr<br><br>arrInt <span class="hljs-operator">=</span> [<span class="hljs-number">1</span> , <span class="hljs-number">9</span> , <span class="hljs-number">2</span> , <span class="hljs-number">8</span> , <span class="hljs-number">3</span> , <span class="hljs-number">7</span> , <span class="hljs-number">4</span> , <span class="hljs-number">6</span> , <span class="hljs-number">5</span>]<br>arrInt.sort()<br>arrInt<br><span class="hljs-comment">//闭包实现降序排序并返回排序后数组</span><br><span class="hljs-keyword">let</span> arrInt1 <span class="hljs-operator">=</span> arrInt.sorted(by: &#123;<span class="hljs-variable">$0</span> <span class="hljs-operator">&gt;</span> <span class="hljs-variable">$1</span>&#125;)<br>arrInt<br>arrInt1<br><br><br><span class="hljs-comment">//我们设定字符串数组以字符串长度进行排序</span><br><span class="hljs-keyword">var</span> str <span class="hljs-operator">=</span> [<span class="hljs-string">&quot;1&quot;</span> , <span class="hljs-string">&quot;22&quot;</span> , <span class="hljs-string">&quot;333&quot;</span> , <span class="hljs-string">&quot;4444&quot;</span> , <span class="hljs-string">&quot;55555&quot;</span>]<br>str<br>str.sort(by: &#123;left , right <span class="hljs-keyword">in</span><br>    <span class="hljs-keyword">return</span> left.count <span class="hljs-operator">&gt;</span> right.count<br>&#125;)<br>str<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="二维数组创建及数组遍历"><a href="#二维数组创建及数组遍历" class="headerlink" title="二维数组创建及数组遍历"></a>二维数组创建及数组遍历</h3><p><code>二维数组创建</code><br> <img src="/./assets/38_10.png" srcset="/img/loading.gif" lazyload alt="创建二维"></p>
+<p>嗯。。。。发现了吧本质就是一维数组里面还有一个一维数组<br><code>数组遍历</code><br> <img src="/./assets/38_11.png" srcset="/img/loading.gif" lazyload alt="数组遍历"></p>
+<p>完了吗？当然没有，再看看其他几种遍历方式吧：<br> <img src="/./assets/38_12.png" srcset="/img/loading.gif" lazyload alt="数组遍历2"></p>
+<p>看出来Swift的包容性了吧，继续看看其他的吧：<br><code>遍历索引和值</code><br> <img src="/./assets/38_13.png" srcset="/img/loading.gif" lazyload alt="索引和值字符串插入"></p>
+<p><code>forEach遍历</code><br> <img src="/./assets/38_14.png" srcset="/img/loading.gif" lazyload alt="forEach"></p>
+<p>数组遍历基本就结束了，我们来关心一些其他的小问题，嗯。。。比如如何比较两个数组差异：<br><code>difference：获得差异</code><br> <img src="/./assets/38_15.png" srcset="/img/loading.gif" lazyload alt="差异"></p>
+<p>来瞅瞅这里用到的这些代码示例吧：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-comment">//import UIKit</span><br><br><span class="hljs-keyword">import</span> Foundation<br><br><span class="hljs-comment">//定义二维数组：直接赋值两个一维数组</span><br><span class="hljs-keyword">var</span> arr1 <span class="hljs-operator">=</span> [<span class="hljs-number">1</span> , <span class="hljs-number">2</span> , <span class="hljs-number">3</span>]<br><span class="hljs-keyword">var</span> arr2 <span class="hljs-operator">=</span> [<span class="hljs-number">1</span> , <span class="hljs-number">2</span> , <span class="hljs-number">3</span>]<br><span class="hljs-keyword">var</span> arr <span class="hljs-operator">=</span> [arr1 , arr2]<br><br><br><span class="hljs-comment">//定义二维数组并指定为整数类型</span><br><span class="hljs-keyword">var</span> arrInt <span class="hljs-operator">=</span> <span class="hljs-type">Array</span>&lt;<span class="hljs-type">Array</span>&lt;<span class="hljs-type">Int</span>&gt;&gt;()<br><span class="hljs-comment">//把那俩一维数组添加进来</span><br>arrInt.append(arr1)<br>arrInt.append(arr2)<br>arrInt<br><span class="hljs-comment">//数组遍历，循环</span><br><span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> arrInt&#123;<br>    <span class="hljs-keyword">for</span> column <span class="hljs-keyword">in</span> row&#123;<br>        <span class="hljs-comment">//print(column)</span><br>    &#125;<br>&#125;<br><br><br><span class="hljs-comment">//当然还有按索引遍历</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">0</span><span class="hljs-operator">..&lt;</span>arr1.count&#123;<br>    <span class="hljs-built_in">print</span>(arr1[i])<br>&#125;<br><span class="hljs-comment">//当然Swift嘛很随意的，我们可以省略这个索引</span><br><span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> arr1&#123;<br>    <span class="hljs-built_in">print</span>(item)<br>&#125;<br><span class="hljs-comment">//你以为这是Swift的极限？开玩笑，他甚至引入了sql语句的条件判断</span><br><span class="hljs-keyword">var</span> strArr <span class="hljs-operator">=</span> [<span class="hljs-string">&quot;张鑫乐&quot;</span> , <span class="hljs-string">&quot;张三&quot;</span> , <span class="hljs-string">&quot;李四&quot;</span> , <span class="hljs-string">&quot;张大仙&quot;</span>]<br><span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> strArr <span class="hljs-keyword">where</span> item.hasPrefix(<span class="hljs-string">&quot;张&quot;</span>)&#123;<br>    <span class="hljs-built_in">print</span>(item)<br>&#125;<br><br><span class="hljs-comment">//遍历数组索引和值</span><br><span class="hljs-keyword">for</span> (index , value) <span class="hljs-keyword">in</span> strArr.enumerated()&#123;<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;<span class="hljs-subst">\(index)</span> : <span class="hljs-subst">\(value)</span>&quot;</span>)<br>&#125;<br><span class="hljs-comment">//forEach遍历</span><br>strArr.forEach&#123;item <span class="hljs-keyword">in</span><br>    <span class="hljs-built_in">print</span>(item)<br>&#125;<br><span class="hljs-comment">//比较数组差异</span><br><span class="hljs-keyword">var</span> strArrCopy <span class="hljs-operator">=</span> [<span class="hljs-string">&quot;张鑫乐&quot;</span> , <span class="hljs-string">&quot;张三&quot;</span> , <span class="hljs-string">&quot;李四&quot;</span> , <span class="hljs-string">&quot;张大脚&quot;</span>]<br><span class="hljs-keyword">let</span> dif <span class="hljs-operator">=</span> strArr.difference(from: strArrCopy)<br><span class="hljs-built_in">print</span>(dif)<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="数组常用操作"><a href="#数组常用操作" class="headerlink" title="数组常用操作"></a>数组常用操作</h3><h4 id="字符串与数组的转换"><a href="#字符串与数组的转换" class="headerlink" title="字符串与数组的转换"></a>字符串与数组的转换</h4><p><code>split：把字符串转换为数组</code><br> <img src="/./assets/38_16.png" srcset="/img/loading.gif" lazyload alt="字符串转数组"></p>
+<p><code>joined：数组合并成字符串</code><br> <img src="/./assets/38_17.png" srcset="/img/loading.gif" lazyload alt="合并数组"></p>
+<p><code>zip：可以将两个序列中的元素一一对应的方式重新组合成一个序列</code><br> <img src="/./assets/38_18.png" srcset="/img/loading.gif" lazyload alt="zip演示"></p>
+<p>可是如果元素个数对应不上怎么办？直接看结果：<br> <img src="/./assets/38_19.png" srcset="/img/loading.gif" lazyload alt="zip2"></p>
+<p> <img src="/./assets/38_20.png" srcset="/img/loading.gif" lazyload alt="zip3"></p>
+<h4 id="数组过滤"><a href="#数组过滤" class="headerlink" title="数组过滤"></a>数组过滤</h4><p><code>filter、allSatisfy、where、partition等</code><br> <img src="/./assets/38_21.png" srcset="/img/loading.gif" lazyload alt="数组过滤"></p>
+<p><code>partition：定位排序，类似于快排中的定位数字</code><br> <img src="/./assets/38_22.png" srcset="/img/loading.gif" lazyload alt="定位排序"></p>
+<p><code>min、max：获取序列中的最小值、最大值</code><br> <img src="/./assets/38_23.png" srcset="/img/loading.gif" lazyload alt="最大最小值"></p>
+<p><code>氛围到这了都，感受一下字典吧，后续会详细介绍</code><br> <img src="/./assets/38_24.png" srcset="/img/loading.gif" lazyload alt="字典"></p>
+<p><code>prefix：数组截取</code><br> <img src="/./assets/38_25.png" srcset="/img/loading.gif" lazyload alt="截取"></p>
+<p><code>drop：顾名思义丢弃</code><br> <img src="/./assets/38_26.png" srcset="/img/loading.gif" lazyload alt="drop使用"></p>
+<h4 id="数组降维"><a href="#数组降维" class="headerlink" title="数组降维"></a>数组降维</h4><p>诺，顾名思义啦，就是把多位数组通过一些方法转换为维度更低的数组<br><code>flatMap：获取每个数组元素并放在一个一维数组里</code><br> <img src="/./assets/38_27.png" srcset="/img/loading.gif" lazyload alt="数组降维"></p>
+<p>最后看看这个部分用到的代码示例吧：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><code class="hljs swift"><span class="hljs-comment">//import UIKit</span><br><br><span class="hljs-keyword">import</span> Foundation<br><br><span class="hljs-keyword">let</span> str1 <span class="hljs-operator">=</span> <span class="hljs-string">&quot;I have 8 girls&quot;</span><br><span class="hljs-comment">//以“ ”分割转换为数组闭包转换</span><br><span class="hljs-keyword">let</span> arr1 <span class="hljs-operator">=</span> str1.split&#123;<span class="hljs-variable">$0</span> <span class="hljs-operator">==</span> <span class="hljs-string">&quot; &quot;</span>&#125;<br>arr1<br><span class="hljs-comment">//当然我们也可以不使用闭包，类似Java那样就可</span><br><span class="hljs-keyword">let</span> arr2 <span class="hljs-operator">=</span> str1.split(separator: <span class="hljs-string">&quot; &quot;</span>)<br>arr2<br><span class="hljs-comment">//当然用闭包的话还有比Java更牛掰的后续会介绍闭包</span><br><span class="hljs-keyword">let</span> arr3 <span class="hljs-operator">=</span> str1.split&#123;<span class="hljs-variable">$0</span>.isNumber&#125;;<br>arr3<br><br><span class="hljs-comment">//以某字符合并数组</span><br><span class="hljs-keyword">let</span> str2 <span class="hljs-operator">=</span> arr2.joined(separator: <span class="hljs-string">&quot; &quot;</span>)<br><br><span class="hljs-comment">//介绍一个zip函数</span><br>arr1<br><span class="hljs-keyword">let</span> arr4 <span class="hljs-operator">=</span> [<span class="hljs-number">1</span> , <span class="hljs-number">2</span> , <span class="hljs-number">3</span> , <span class="hljs-number">4</span> , <span class="hljs-number">5</span>]<br><span class="hljs-keyword">let</span> zip1 <span class="hljs-operator">=</span> <span class="hljs-built_in">zip</span>(arr4, arr1)<br><span class="hljs-keyword">for</span> (num , words) <span class="hljs-keyword">in</span> zip1&#123;<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;<span class="hljs-subst">\(num)</span> : <span class="hljs-subst">\(words)</span>&quot;</span>)<br>&#125;<br><br><span class="hljs-comment">//filter</span><br><span class="hljs-keyword">var</span> arr5 <span class="hljs-operator">=</span> [<span class="hljs-string">&quot;张鑫乐&quot;</span>,<span class="hljs-string">&quot;张晓泽&quot;</span>,<span class="hljs-string">&quot;陈小理&quot;</span>,<span class="hljs-string">&quot;白一晓&quot;</span>,<span class="hljs-string">&quot;张三丰&quot;</span>,<span class="hljs-string">&quot;佐佐木&quot;</span>]<br><span class="hljs-keyword">let</span> arr6 <span class="hljs-operator">=</span> arr5.filter&#123;<span class="hljs-variable">$0</span>.hasPrefix(<span class="hljs-string">&quot;张&quot;</span>)&#125;<br>arr6<br><span class="hljs-comment">//allSatisfy：全部满足</span><br><span class="hljs-keyword">var</span> arr7 <span class="hljs-operator">=</span> [<span class="hljs-number">1</span> , <span class="hljs-number">2</span> , <span class="hljs-number">3</span> , <span class="hljs-number">4</span>]<br><span class="hljs-keyword">var</span> arr8 <span class="hljs-operator">=</span> [<span class="hljs-number">1</span> , <span class="hljs-number">2</span> , <span class="hljs-number">6</span> , <span class="hljs-number">7</span>]<br><span class="hljs-keyword">let</span> isBig <span class="hljs-operator">=</span> arr7.allSatisfy(&#123;<span class="hljs-variable">$0</span> <span class="hljs-operator">&lt;</span> <span class="hljs-number">5</span>&#125;)<br><span class="hljs-keyword">let</span> isSmall <span class="hljs-operator">=</span> arr8.allSatisfy(&#123;<span class="hljs-variable">$0</span> <span class="hljs-operator">&lt;</span> <span class="hljs-number">5</span>&#125;)<br>isBig<br>isSmall<br><span class="hljs-comment">//where：条件处理类似sql，当然这个加以循环会有更多操作，此处我们只演示first与last</span><br><span class="hljs-comment">//从前往后第一个&gt;2的元素</span><br><span class="hljs-keyword">let</span> num1 <span class="hljs-operator">=</span> arr7.first(where: &#123;<span class="hljs-variable">$0</span> <span class="hljs-operator">&gt;</span> <span class="hljs-number">2</span>&#125;)<br>num1<br><span class="hljs-comment">//从后往前第一个&lt;6的元素</span><br><span class="hljs-keyword">let</span> num2 <span class="hljs-operator">=</span> arr8.last(where: &#123;<span class="hljs-variable">$0</span> <span class="hljs-operator">&lt;</span> <span class="hljs-number">6</span>&#125;)<br>num2<br><span class="hljs-comment">//从前往后第一个2的元素索引下标</span><br><span class="hljs-keyword">let</span> index1 <span class="hljs-operator">=</span> arr7.firstIndex(of: <span class="hljs-number">2</span>)<br>index1<br><span class="hljs-comment">//从后往前第一个2的元素索引下标</span><br><span class="hljs-keyword">let</span> index2 <span class="hljs-operator">=</span> arr7.lastIndex(of: <span class="hljs-number">3</span>)<br>index2<br><span class="hljs-comment">//当然这个同样也可以引入where就不展示了</span><br><br><br><span class="hljs-keyword">var</span> arr9 <span class="hljs-operator">=</span> [<span class="hljs-number">1</span> , <span class="hljs-number">2</span> , <span class="hljs-number">3</span> , <span class="hljs-number">8</span> , <span class="hljs-number">9</span> , <span class="hljs-number">7</span> , <span class="hljs-number">6</span> , <span class="hljs-number">5</span> , <span class="hljs-number">4</span>]<br><span class="hljs-keyword">let</span> sort <span class="hljs-operator">=</span> arr9.partition &#123;<span class="hljs-variable">$0</span> <span class="hljs-operator">&gt;</span> <span class="hljs-number">5</span>&#125;<br>arr9<br><br><span class="hljs-comment">//最大值最小值</span><br><span class="hljs-keyword">var</span> arr10 <span class="hljs-operator">=</span> [<span class="hljs-number">1</span> , <span class="hljs-number">2</span> , <span class="hljs-number">3</span> , <span class="hljs-operator">-</span><span class="hljs-number">8</span> , <span class="hljs-operator">-</span><span class="hljs-number">9</span> , <span class="hljs-number">7</span> , <span class="hljs-number">6</span> , <span class="hljs-number">5</span> , <span class="hljs-number">4</span>]<br><span class="hljs-keyword">let</span> minNum <span class="hljs-operator">=</span> arr10.min();<br><span class="hljs-keyword">let</span> maxNum <span class="hljs-operator">=</span> arr10.max();<br><span class="hljs-comment">//当然还有abs求绝对值</span><br><span class="hljs-keyword">let</span> absNum <span class="hljs-operator">=</span> arr10.max &#123;<span class="hljs-built_in">abs</span>(<span class="hljs-variable">$0</span>) <span class="hljs-operator">&lt;</span> <span class="hljs-built_in">abs</span>(<span class="hljs-variable">$1</span>)&#125;<br>absNum<br><br><span class="hljs-keyword">let</span> arr11 <span class="hljs-operator">=</span> [<span class="hljs-string">&quot;张鑫乐&quot;</span> : <span class="hljs-number">520</span> , <span class="hljs-string">&quot;张三丰&quot;</span> : <span class="hljs-number">250</span> , <span class="hljs-string">&quot;张天爱&quot;</span> : <span class="hljs-number">110</span>]<br><span class="hljs-keyword">let</span> maxArr <span class="hljs-operator">=</span> arr11.max &#123;<span class="hljs-variable">$0</span>.value <span class="hljs-operator">&lt;</span> <span class="hljs-variable">$1</span>.value&#125;<br>maxArr<br><br><br><br>arr10<br><span class="hljs-comment">//返回小于5的序列</span><br><span class="hljs-keyword">let</span> num3 <span class="hljs-operator">=</span> arr10.prefix&#123;<span class="hljs-variable">$0</span> <span class="hljs-operator">&lt;</span> <span class="hljs-number">5</span>&#125;<br>num3<br><span class="hljs-comment">//返回索引下标前的元素组成序列，不包含当前及左闭右开</span><br>arr10<br><span class="hljs-keyword">let</span> num4 <span class="hljs-operator">=</span> arr10.prefix(upTo: <span class="hljs-number">5</span>)<br><span class="hljs-comment">//返回n个元素组成的子序列</span><br><span class="hljs-keyword">let</span> num5 <span class="hljs-operator">=</span> arr10.prefix(<span class="hljs-number">4</span>)<br><span class="hljs-comment">//返回从数组开始到指定位置的子序列右也闭</span><br><span class="hljs-keyword">let</span> num6 <span class="hljs-operator">=</span> arr10.prefix(through: <span class="hljs-number">5</span>)<br><br><br>arr10<br><span class="hljs-comment">//遍历如果小于n跳过，当遇到&gt;=7时返回其以及其后的元素作为数组</span><br><span class="hljs-keyword">let</span> num7 <span class="hljs-operator">=</span> arr10.drop&#123;<span class="hljs-variable">$0</span> <span class="hljs-operator">&lt;</span> <span class="hljs-number">7</span>&#125;<br>num7<br><span class="hljs-comment">//丢弃前n个返回剩余元素组成的数组</span><br><span class="hljs-keyword">let</span> num8 <span class="hljs-operator">=</span> arr10.dropFirst(<span class="hljs-number">3</span>)<br><br>arr7 <span class="hljs-operator">=</span> [<span class="hljs-number">1</span> , <span class="hljs-number">2</span> , <span class="hljs-number">3</span> , <span class="hljs-number">4</span>]<br>arr8 <span class="hljs-operator">=</span> [<span class="hljs-number">5</span> , <span class="hljs-number">6</span> , <span class="hljs-number">7</span> , <span class="hljs-number">8</span>]<br><span class="hljs-keyword">var</span> arr12 <span class="hljs-operator">=</span> [arr7 , arr8]<br><span class="hljs-comment">//flatMap：获取每个数组元素并放在一个一维数组里</span><br><span class="hljs-keyword">var</span> arr13 <span class="hljs-operator">=</span> arr12.flatMap&#123;<span class="hljs-variable">$0</span>&#125;<br>arr13<br><span class="hljs-comment">//当然这个有空值nil时也会体现出来</span><br><span class="hljs-keyword">var</span> arr14 <span class="hljs-operator">=</span> [<span class="hljs-number">5</span> , <span class="hljs-number">6</span> , <span class="hljs-literal">nil</span> , <span class="hljs-literal">nil</span>]<br><span class="hljs-keyword">var</span> arr15 <span class="hljs-operator">=</span> [arr7 , arr14]<br>arr15<br><span class="hljs-comment">//compactMap：去空</span><br><span class="hljs-keyword">var</span> arr16 <span class="hljs-operator">=</span> arr15.flatMap &#123;<span class="hljs-variable">$0</span>&#125;.compactMap &#123;<span class="hljs-variable">$0</span>&#125;<br>arr16<br><br></code></pre></td></tr></table></figure>
+
+<hr>
+<blockquote>
+<p>私货彩蛋：我从不后悔对任何人好，哪怕是我看错的人，哪怕我被辜负。因为，我对你好，不是因为你有多好，只是因为我很好	——	慧海大师</p>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Swift基础——数组Array</div>
+      <div>http://example.com/2026/09/05/38_Swift基础——数组Array/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>星期天</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年9月5日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2026/09/05/39_Swift%E5%9F%BA%E7%A1%80%E2%80%94%E2%80%94%E5%AD%97%E5%85%B8/" title="Swift基础——字典">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Swift基础——字典</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/09/05/37_Swift%E5%9F%BA%E7%A1%80%E2%80%94%E2%80%94%E5%9F%BA%E6%9C%AC%E6%95%B0%E5%80%BC%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E3%80%81%E5%85%83%E7%BB%84Tuples/" title="Swift基础——基本数值类型转换、元组Tuples">
+                        <span class="hidden-mobile">Swift基础——基本数值类型转换、元组Tuples</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    function isExpandAllEnabled() {
+      return CONFIG.toc && CONFIG.toc.expand_all === true;
+    }
+    function expandAllToc() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .tocbot-is-collapsed').removeClass('tocbot-is-collapsed');
+    }
+    function updateTocToggle($li, $childList) {
+      var $toggle = $li.children('.toc-toggle');
+      if ($toggle.length === 0) { return; }
+      var collapsed = $childList.hasClass('tocbot-is-collapsed');
+      $toggle
+        .toggleClass('toc-toggle-collapsed', collapsed)
+        .toggleClass('toc-toggle-expanded', !collapsed);
+    }
+    function bindTocToggle() {
+      if (!isExpandAllEnabled()) { return; }
+      jQuery('#toc-body .toc-list-item').each(function() {
+        var $li = jQuery(this);
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) {
+          if ($li.children('.toc-toggle').length === 0) {
+            $li.prepend('<span class="toc-toggle toc-toggle-placeholder" aria-hidden="true">›</span>');
+          }
+          return;
+        }
+
+        if ($li.children('.toc-toggle').length === 0) {
+          $li.prepend('<span class="toc-toggle toc-toggle-expanded" aria-hidden="true">›</span>');
+        }
+        updateTocToggle($li, $childList);
+      });
+      jQuery('#toc-body').off('click.tocToggle').on('click.tocToggle', '.toc-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $li = jQuery(this).parent('.toc-list-item');
+        var $childList = $li.children('ol');
+        if ($childList.length === 0) { return; }
+        $childList.toggleClass('tocbot-is-collapsed');
+        updateTocToggle($li, $childList);
+      });
+      if (!window.__tocToggleObserver) {
+        window.__tocToggleObserver = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type !== 'attributes' || mutation.attributeName !== 'class') { return; }
+            var $list = jQuery(mutation.target);
+            var $li = $list.parent('.toc-list-item');
+            if ($li.length === 0) { return; }
+            updateTocToggle($li, $list);
+          });
+        });
+        jQuery('#toc-body ol').each(function() {
+          window.__tocToggleObserver.observe(this, { attributes: true });
+        });
+      }
+    }
+    var tocConfig = Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc);
+    if (isExpandAllEnabled()) {
+      tocConfig.collapseDepth = 6;
+    }
+    window.tocbot.init(tocConfig);
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+    expandAllToc();
+    bindTocToggle();
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+        expandAllToc();
+        bindTocToggle();
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

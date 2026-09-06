@@ -19,26 +19,26 @@
   <meta name="author" content="星期天">
   <meta name="keywords" content="">
   
-    <meta name="description" content="AOP通知中获取数据 原创 于 2023-04-19 08:30:00 发布 · 公开 · 3.4k 阅读 · 0 · 4 · 本内容遵循CC 4.0 BY-SA版权协议 版权声明：本文为博主原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接和本声明。 · 编辑文章链接：https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_45696320&#x2F;article&#x2F;detail">
+    <meta name="description" content="AOP通知中获取数据之前我们写AOP仅仅是在原始方法前后追加一些操作，接下来我们要说说AOP中数据相关的内容，我们将从获取参数、获取返回值和获取异常三个方面来研究切入点的相关信息。  获取切入点方法的参数：所有的通知类型都可以获取参数  JoinPoint：适用于前置、后置、返回后、抛出异常后通知  ProceedingJoinPoint：适用于环绕通知    获取切入点方法返回值：前置和抛出异常">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="AOP通知中获取数据">
 <meta property="og:url" content="http://example.com/2026/09/05/56_AOP%E9%80%9A%E7%9F%A5%E4%B8%AD%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="AOP通知中获取数据 原创 于 2023-04-19 08:30:00 发布 · 公开 · 3.4k 阅读 · 0 · 4 · 本内容遵循CC 4.0 BY-SA版权协议 版权声明：本文为博主原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接和本声明。 · 编辑文章链接：https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_45696320&#x2F;article&#x2F;detail">
+<meta property="og:description" content="AOP通知中获取数据之前我们写AOP仅仅是在原始方法前后追加一些操作，接下来我们要说说AOP中数据相关的内容，我们将从获取参数、获取返回值和获取异常三个方面来研究切入点的相关信息。  获取切入点方法的参数：所有的通知类型都可以获取参数  JoinPoint：适用于前置、后置、返回后、抛出异常后通知  ProceedingJoinPoint：适用于环绕通知    获取切入点方法返回值：前置和抛出异常">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/assets/56_1.png">
 <meta property="og:image" content="http://example.com/assets/56_2.png">
 <meta property="og:image" content="http://example.com/assets/56_3.png">
 <meta property="og:image" content="http://example.com/assets/56_4.png">
 <meta property="article:published_time" content="2026-09-05T11:45:36.349Z">
-<meta property="article:modified_time" content="2026-09-05T11:28:17.600Z">
+<meta property="article:modified_time" content="2026-09-06T03:40:44.384Z">
 <meta property="article:author" content="星期天">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/assets/56_1.png">
   
   
   
-  <title>Hexo</title>
+  <title>AOP通知中获取数据 - Hexo</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -307,13 +307,18 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text=""></span>
+            <span id="subtitle" data-typed-text="AOP通知中获取数据"></span>
           
         </div>
 
         
           
   <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        星期天
+      </span>
     
     
       <span class="post-meta">
@@ -330,7 +335,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.2k 字
+          4k 字
         
       </span>
     
@@ -341,7 +346,7 @@
         
         
         
-          35 分钟
+          34 分钟
         
       </span>
     
@@ -380,15 +385,12 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header"></h1>
+            <h1 id="seo-header">AOP通知中获取数据</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="AOP通知中获取数据"><a href="#AOP通知中获取数据" class="headerlink" title="AOP通知中获取数据"></a>AOP通知中获取数据</h1><blockquote>
-<p>原创 于 2023-04-19 08:30:00 发布 · 公开 · 3.4k 阅读 · 0 · 4 · 本内容遵循CC 4.0 BY-SA版权协议 版权声明：本文为博主原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接和本声明。 · 编辑<br>文章链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45696320/article/details/130227167">https://blog.csdn.net/weixin_45696320/article/details/130227167</a></p>
-</blockquote>
-<h2 id="AOP通知中获取数据-1"><a href="#AOP通知中获取数据-1" class="headerlink" title="AOP通知中获取数据"></a>AOP通知中获取数据</h2><p>之前我们写AOP仅仅是在原始方法前后追加一些操作，接下来我们要说说AOP中数据相关的内容，我们将从获取参数、获取返回值和获取异常三个方面来研究切入点的相关信息。</p>
+                <h2 id="AOP通知中获取数据"><a href="#AOP通知中获取数据" class="headerlink" title="AOP通知中获取数据"></a>AOP通知中获取数据</h2><p>之前我们写AOP仅仅是在原始方法前后追加一些操作，接下来我们要说说AOP中数据相关的内容，我们将从获取参数、获取返回值和获取异常三个方面来研究切入点的相关信息。</p>
 <ul>
 <li><p>获取切入点方法的参数：所有的通知类型都可以获取参数</p>
 <ul>
@@ -423,7 +425,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@Aspect</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MyAdvice</span> &#123;<br>    <span class="hljs-meta">@Pointcut(&quot;execution(* com.taro.dao.BookDao.findName(..))&quot;)</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">pt</span><span class="hljs-params">()</span>&#123;&#125;<br><br>    <span class="hljs-meta">@Around(&quot;pt()&quot;)</span><br>    <span class="hljs-keyword">public</span> Object <span class="hljs-title function_">around</span><span class="hljs-params">(ProceedingJoinPoint pjp)</span><span class="hljs-keyword">throws</span> Throwable &#123;<br>        Object[] args = pjp.getArgs();<br>        System.out.println(Arrays.toString(args));<br>        <span class="hljs-type">Object</span> <span class="hljs-variable">ret</span> <span class="hljs-operator">=</span> pjp.proceed();<br>        <span class="hljs-keyword">return</span> ret;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <ul>
-<li>pjp.proceed()方法是有两个构造方法，分别是:<br> <img src="/./assets/56_1.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></li>
+<li>pjp.proceed()方法是有两个构造方法，分别是:<br>  <img src="/./assets/56_1.png" srcset="/img/loading.gif" lazyload></li>
 </ul>
 <blockquote>
 <ul>
@@ -444,7 +446,7 @@
 
 <p><mark>注意一下下面哟:</mark> </p>
 <p>(1)参数名的问题<br> <img src="/./assets/56_2.png" srcset="/img/loading.gif" lazyload></p>
-<p>(2)afterReturning方法参数类型的问题<br>参数类型可以写成String，但是为了能匹配更多的参数类型，建议写成Object类型<br>(3)afterReturning方法参数的顺序问题<br> <img src="/./assets/56_3.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>(2)afterReturning方法参数类型的问题<br>参数类型可以写成String，但是为了能匹配更多的参数类型，建议写成Object类型<br>(3)afterReturning方法参数的顺序问题<br>  <img src="/./assets/56_3.png" srcset="/img/loading.gif" lazyload></p>
 <h3 id="异常获取"><a href="#异常获取" class="headerlink" title="异常获取"></a>异常获取</h3><p>对于获取抛出的异常，只有抛出异常后 <code>AfterThrowing</code> 和环绕 <code>Around</code> 这两个通知类型可以获取。</p>
 <h4 id="环绕通知获取异常"><a href="#环绕通知获取异常" class="headerlink" title="环绕通知获取异常"></a>环绕通知获取异常</h4><p>以前我们是抛出异常，现在只需要将异常捕获，就可以获取到原始方法的异常信息了</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@Aspect</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MyAdvice</span> &#123;<br>    <span class="hljs-meta">@Pointcut(&quot;execution(* com.itheima.dao.BookDao.findName(..))&quot;)</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">pt</span><span class="hljs-params">()</span>&#123;&#125;<br><br>    <span class="hljs-meta">@Around(&quot;pt()&quot;)</span><br>    <span class="hljs-keyword">public</span> Object <span class="hljs-title function_">around</span><span class="hljs-params">(ProceedingJoinPoint pjp)</span>&#123;<br>        Object[] args = pjp.getArgs();<br>        System.out.println(Arrays.toString(args));<br>        args[<span class="hljs-number">0</span>] = <span class="hljs-number">666</span>;<br>        <span class="hljs-type">Object</span> <span class="hljs-variable">ret</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-keyword">try</span>&#123;<br>            ret = pjp.proceed(args);<br>        &#125;<span class="hljs-keyword">catch</span>(Throwable throwable)&#123;<br>            t.printStackTrace();<br>        &#125;<br>        <span class="hljs-keyword">return</span> ret;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
@@ -474,7 +476,7 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div></div>
+      <div>AOP通知中获取数据</div>
       <div>http://example.com/2026/09/05/56_AOP通知中获取数据/</div>
     </div>
     <div class="license-meta">
@@ -519,9 +521,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2026/09/05/58_Spring%20MVC%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86%E4%B8%8E%E6%93%8D%E4%BD%9C/" title="">
+                      <a href="/2026/09/05/57_Spring%E4%BA%8B%E5%8A%A1/" title="Spring事务">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile"></span>
+                        <span class="hidden-mobile">Spring事务</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -529,8 +531,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2026/09/05/55_Spring%20AOP%E9%80%9A%E7%9F%A5%E7%B1%BB%E5%9E%8B/" title="">
-                        <span class="hidden-mobile"></span>
+                      <a href="/2026/09/05/55_Spring%20AOP%E9%80%9A%E7%9F%A5%E7%B1%BB%E5%9E%8B/" title="Spring AOP通知类型">
+                        <span class="hidden-mobile">Spring AOP通知类型</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
