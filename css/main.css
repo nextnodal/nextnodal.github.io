@@ -716,6 +716,7 @@ sup > a::before,
 }
 .qr-img {
   max-width: 12rem;
+  transform: translate(0, -150px);
   position: absolute;
   right: -5.25rem;
   z-index: 99;
