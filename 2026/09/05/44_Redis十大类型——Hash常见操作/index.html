@@ -22,24 +22,24 @@
     <meta name="description" content="Redis十大类型——Hash常见操作 [TOC]   很明显咯它也是以健值对方式存在的，只不过value也就是值，在这里也变成了一组简直对。🍊个🌰：  想必多少都有一点语言基础，理解Hash和核心结构，那么我们还是直接来看在Redis中关于Hash的一些常规操作吧！！！ 命令操作简列  hset &#x2F; hget ： hget每次只可以取出一个值如下图所示  hmset &#x2F;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis十大类型——Hash常见操作">
-<meta property="og:url" content="http://example.com/2026/09/05/44_Redis%E5%8D%81%E5%A4%A7%E7%B1%BB%E5%9E%8B%E2%80%94%E2%80%94Hash%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C/index.html">
+<meta property="og:url" content="http://www.nextsunday.me/2026/09/05/44_Redis%E5%8D%81%E5%A4%A7%E7%B1%BB%E5%9E%8B%E2%80%94%E2%80%94Hash%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="Redis十大类型——Hash常见操作 [TOC]   很明显咯它也是以健值对方式存在的，只不过value也就是值，在这里也变成了一组简直对。🍊个🌰：  想必多少都有一点语言基础，理解Hash和核心结构，那么我们还是直接来看在Redis中关于Hash的一些常规操作吧！！！ 命令操作简列  hset &#x2F; hget ： hget每次只可以取出一个值如下图所示  hmset &#x2F;">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/assets/44_1.png">
-<meta property="og:image" content="http://example.com/assets/44_2.png">
-<meta property="og:image" content="http://example.com/assets/44_3.png">
-<meta property="og:image" content="http://example.com/assets/44_4.png">
-<meta property="og:image" content="http://example.com/assets/44_5.png">
-<meta property="og:image" content="http://example.com/assets/44_6.png">
-<meta property="og:image" content="http://example.com/assets/44_7.png">
-<meta property="og:image" content="http://example.com/assets/44_8.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/44_1.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/44_2.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/44_3.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/44_4.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/44_5.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/44_6.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/44_7.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/44_8.png">
 <meta property="article:published_time" content="2026-09-05T11:45:35.769Z">
 <meta property="article:modified_time" content="2026-09-06T07:03:02.522Z">
 <meta property="article:author" content="星期天">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/assets/44_1.png">
+<meta name="twitter:image" content="http://www.nextsunday.me/assets/44_1.png">
   
   
   
@@ -81,7 +81,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"www.nextsunday.me","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -546,7 +546,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Redis十大类型——Hash常见操作</div>
-      <div>http://example.com/2026/09/05/44_Redis十大类型——Hash常见操作/</div>
+      <div>http://www.nextsunday.me/2026/09/05/44_Redis十大类型——Hash常见操作/</div>
     </div>
     <div class="license-meta">
       

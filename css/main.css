@@ -1380,6 +1380,9 @@ body.mobile-menu-open {
 .index-card {
   margin-bottom: 2.5rem;
 }
+.mango-dark-theme {
+  --theme-color: #364151;
+}
 .index-img img {
   display: block;
   width: 100%;

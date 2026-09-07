@@ -22,20 +22,20 @@
     <meta name="description" content="这里写目录标题 [TOC] 什么是Spring AOPAOP（Aspect Oriented Programming）：面向切面编程，它是一种思想，它是对某一类事情的集中处理。废话不说第二遍，老规矩，直接来看一张图   如上图所示，三个 service 对象执行过程中都存在安全，事务，缓存，性能等相同行为，这些相同的行为显然应该在同一个地方管理，切面就是为了解决此类问题应运而生的，能做到相同功能的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring AOP">
-<meta property="og:url" content="http://example.com/2026/09/05/28_Spring%20AOP/index.html">
+<meta property="og:url" content="http://www.nextsunday.me/2026/09/05/28_Spring%20AOP/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="这里写目录标题 [TOC] 什么是Spring AOPAOP（Aspect Oriented Programming）：面向切面编程，它是一种思想，它是对某一类事情的集中处理。废话不说第二遍，老规矩，直接来看一张图   如上图所示，三个 service 对象执行过程中都存在安全，事务，缓存，性能等相同行为，这些相同的行为显然应该在同一个地方管理，切面就是为了解决此类问题应运而生的，能做到相同功能的">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/assets/28_1.png">
-<meta property="og:image" content="http://example.com/assets/28_2.png">
-<meta property="og:image" content="http://example.com/assets/28_3.png">
-<meta property="og:image" content="http://example.com/assets/28_4.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/28_1.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/28_2.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/28_3.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/28_4.png">
 <meta property="article:published_time" content="2026-09-05T11:45:34.926Z">
 <meta property="article:modified_time" content="2026-09-06T07:03:02.495Z">
 <meta property="article:author" content="星期天">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/assets/28_1.png">
+<meta name="twitter:image" content="http://www.nextsunday.me/assets/28_1.png">
   
   
   
@@ -77,7 +77,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"www.nextsunday.me","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -574,7 +574,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Spring AOP</div>
-      <div>http://example.com/2026/09/05/28_Spring AOP/</div>
+      <div>http://www.nextsunday.me/2026/09/05/28_Spring AOP/</div>
     </div>
     <div class="license-meta">
       

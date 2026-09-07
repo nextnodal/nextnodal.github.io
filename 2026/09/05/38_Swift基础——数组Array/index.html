@@ -22,43 +22,43 @@
     <meta name="description" content="Swift基础——数组Array 数组：使用有序列表存储同一类型的多个值，相同值可出现在一个数组的不同位置。  数组简介首先，和String一样我们也来看看他的一些Api方法常规操作方法  reverse、reversed：数组反转  reverse()在原数组操作，reversed()返回新的数组不会操作破坏原数组swapAt：指定索引位置交换  记住startIndex这些索引是从“1”开始数">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Swift基础——数组Array">
-<meta property="og:url" content="http://example.com/2026/09/05/38_Swift%E5%9F%BA%E7%A1%80%E2%80%94%E2%80%94%E6%95%B0%E7%BB%84Array/index.html">
+<meta property="og:url" content="http://www.nextsunday.me/2026/09/05/38_Swift%E5%9F%BA%E7%A1%80%E2%80%94%E2%80%94%E6%95%B0%E7%BB%84Array/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="Swift基础——数组Array 数组：使用有序列表存储同一类型的多个值，相同值可出现在一个数组的不同位置。  数组简介首先，和String一样我们也来看看他的一些Api方法常规操作方法  reverse、reversed：数组反转  reverse()在原数组操作，reversed()返回新的数组不会操作破坏原数组swapAt：指定索引位置交换  记住startIndex这些索引是从“1”开始数">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/assets/38_1.png">
-<meta property="og:image" content="http://example.com/assets/38_2.png">
-<meta property="og:image" content="http://example.com/assets/38_3.png">
-<meta property="og:image" content="http://example.com/assets/38_4.png">
-<meta property="og:image" content="http://example.com/assets/38_5.png">
-<meta property="og:image" content="http://example.com/assets/38_6.png">
-<meta property="og:image" content="http://example.com/assets/38_7.png">
-<meta property="og:image" content="http://example.com/assets/38_8.png">
-<meta property="og:image" content="http://example.com/assets/38_9.png">
-<meta property="og:image" content="http://example.com/assets/38_10.png">
-<meta property="og:image" content="http://example.com/assets/38_11.png">
-<meta property="og:image" content="http://example.com/assets/38_12.png">
-<meta property="og:image" content="http://example.com/assets/38_13.png">
-<meta property="og:image" content="http://example.com/assets/38_14.png">
-<meta property="og:image" content="http://example.com/assets/38_15.png">
-<meta property="og:image" content="http://example.com/assets/38_16.png">
-<meta property="og:image" content="http://example.com/assets/38_17.png">
-<meta property="og:image" content="http://example.com/assets/38_18.png">
-<meta property="og:image" content="http://example.com/assets/38_19.png">
-<meta property="og:image" content="http://example.com/assets/38_20.png">
-<meta property="og:image" content="http://example.com/assets/38_21.png">
-<meta property="og:image" content="http://example.com/assets/38_22.png">
-<meta property="og:image" content="http://example.com/assets/38_23.png">
-<meta property="og:image" content="http://example.com/assets/38_24.png">
-<meta property="og:image" content="http://example.com/assets/38_25.png">
-<meta property="og:image" content="http://example.com/assets/38_26.png">
-<meta property="og:image" content="http://example.com/assets/38_27.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/38_1.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/38_2.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/38_3.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/38_4.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/38_5.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/38_6.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/38_7.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/38_8.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/38_9.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/38_10.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/38_11.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/38_12.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/38_13.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/38_14.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/38_15.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/38_16.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/38_17.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/38_18.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/38_19.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/38_20.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/38_21.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/38_22.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/38_23.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/38_24.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/38_25.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/38_26.png">
+<meta property="og:image" content="http://www.nextsunday.me/assets/38_27.png">
 <meta property="article:published_time" content="2026-09-05T11:45:35.409Z">
 <meta property="article:modified_time" content="2026-09-06T07:03:02.518Z">
 <meta property="article:author" content="星期天">
 <meta property="article:tag" content="Swift">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/assets/38_1.png">
+<meta name="twitter:image" content="http://www.nextsunday.me/assets/38_1.png">
   
   
   
@@ -100,7 +100,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"www.nextsunday.me","root":"/","version":"1.9.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"expand_all":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"openkounter":{"server_url":"https://open-kounter.mintimate.cn","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -531,7 +531,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Swift基础——数组Array</div>
-      <div>http://example.com/2026/09/05/38_Swift基础——数组Array/</div>
+      <div>http://www.nextsunday.me/2026/09/05/38_Swift基础——数组Array/</div>
     </div>
     <div class="license-meta">
       
